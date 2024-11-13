@@ -1,9 +1,22 @@
-var http = require("http");
+const express = require("express");
+const app = express();
 
-//create a server object:
-http
-  .createServer(function (req, res) {
-    res.write("Hello from CodeSandbox!"); //write a response to the client
-    res.end(); //end the response
-  })
-  .listen(8080); //the server object listens on port 8080
+// config env
+require("dotenv").config();
+const port = process.env.PORT;
+
+// End config env
+
+// Config database
+const database = require("./configs/database");
+database.connect();
+// End Config database
+
+// Routers
+const Route = require("./routes/index.route");
+Route(app);
+// End Routers
+
+app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`);
+});
