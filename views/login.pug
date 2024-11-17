@@ -1,0 +1,34 @@
+extends ./layout/base.pug
+
+block main 
+	link(rel="stylesheet", href="/css/login.css")
+	div(class="container")
+		div(class="image-section")
+			img(alt="A bowl of pasta with cherry tomatoes and greens", height="600", src="https://storage.googleapis.com/a1aa/image/YAoY1hlUOb7KDFzb2XF4fxCvGfytUIzkFvrDgDkttG2JzhwTA.jpg", style="width: 100%; height: 100%; object-fit: cover;", width="400")
+		div(class="form-section")
+			span(class="close-btn")
+				| ×
+			div(class="d-flex justify-content-evenly mb-4")
+				a(href="/user/login"  class="btn btn-outline-success")
+					| Login
+				a(href="/user/register" class="btn btn-outline-secondary")
+					| Register
+			h2
+				| Welcome
+			p
+				| Please login to your account
+			form(
+				action="/user/login" 
+				method="post"
+			) 
+				input(class="form-control", name="email" placeholder="Email", type="text")
+				input(class="form-control", name="password" placeholder="Password", type="password")
+				button(type="submit" class="btn btn-success w-100")
+					| Login
+			a(class="forgot-password", href="/user/forgot")
+				| Forgot Password
+			a(class="social-login mt-3", href="#")
+				i(class="fab fa-facebook-f")
+				| login with facebook
+			p(class="terms")
+				| Terms and Conditions &amp;amp; Privacy Policy
