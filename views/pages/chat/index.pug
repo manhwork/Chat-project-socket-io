@@ -1,0 +1,65 @@
+extends ../../layout/base.pug
+
+block main 
+
+    link(rel="stylesheet", href="/css/chat.css")
+
+    div(class="d-flex")
+        div(class="sidebar")
+            div(class="d-flex align-items-center mb-4")
+                img(alt="Logo", class="me-2", height="40", src="https://storage.googleapis.com/a1aa/image/T1lqvK8RiQpiLhXPun8MnOKMbe2eNTOKWUXgxtFwYhIAwKyTA.jpg", width="40")
+                span
+                    | Design Cafe
+                i(class="fas fa-chevron-down ms-auto")
+            div(class="search-box")
+                input(class="form-control", placeholder="Search here", type="text")
+            ul(class="user-list")
+                li(class="active")
+                    img(alt="David Smith", height="40", src="https://storage.googleapis.com/a1aa/image/2HSuM7PWkMr4AR7OeKT7xe5TMXlniIaZ6bZg2ydMpYj7vKyTA.jpg", width="40")
+                    div(class="user-info")
+                        div(class="name")
+                            | David Smith
+                        div(class="status")
+                            | Sonar: Hi I&apos;m here
+                    div(class="time")
+                        | 12:08
+                    span(class="badge")
+                        | 6
+                li
+                    img(alt="Angee Sam", height="40", src="https://storage.googleapis.com/a1aa/image/F38vptKsxOp1FdAAN2s4eRfP24FjmccwqzwRI7AesbGPgVknA.jpg", width="40")
+                    div(class="user-info")
+                        div(class="name")
+                            | Angee Sam
+                        div(class="status")
+                            | Sonar: Hi I&apos;m here
+                    div(class="time")
+                        | 12:08
+        div(class="content flex-grow-1")
+            div(class="header")
+                img(alt="David Smith", height="40", src="https://storage.googleapis.com/a1aa/image/2HSuM7PWkMr4AR7OeKT7xe5TMXlniIaZ6bZg2ydMpYj7vKyTA.jpg", width="40")
+                div
+                    div(class="name")
+                        | David Smith
+                    div(class="members")
+                        | 22 members
+            div(class="date-divider")
+                span
+                    | 09 DEC 2020
+            ul(class="messages")
+                li
+                    img(alt="User", height="40", src="https://storage.googleapis.com/a1aa/image/14q8RMRXnNYBMh98MWeVsUWwWJjUzDqUPB2BQyo1BCSfvKyTA.jpg", class="img-received", width="40")
+                    div(class="message received")
+                        | Sed ut perspiciatis unde omnis iste natus
+                        div(class="time")
+                            | 12:03
+                li
+                    div(class="message sent")
+                        | Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+                        div(class="time")
+                            | 12:03
+                    img(alt="David Smith", height="40", class="img-sent", src="https://storage.googleapis.com/a1aa/image/2HSuM7PWkMr4AR7OeKT7xe5TMXlniIaZ6bZg2ydMpYj7vKyTA.jpg", width="40")
+            div(class="message-input")
+                i(class="fas fa-paperclip me-2")
+                input(placeholder="Your message", type="text")
+                button
+                    | Submit
