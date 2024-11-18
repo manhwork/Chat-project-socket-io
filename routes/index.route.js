@@ -4,5 +4,5 @@ const chatRoutes = require("./chat.route");
 module.exports = (app) => {
     app.use("/user", userRoutes);
 
-    app.use("/chat", chatRoutes);
+    app.use("/chats", chatRoutes);
 };

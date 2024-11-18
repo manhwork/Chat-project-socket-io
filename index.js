@@ -6,6 +6,13 @@ const bodyParser = require("body-parser");
 const app = express();
 const server = createServer(app);
 
+// socket io
+
+const io = new Server(server);
+global._io = io;
+
+// socket io
+
 // config env
 require("dotenv").config();
 const port = process.env.PORT;
@@ -35,14 +42,6 @@ const Route = require("./routes/index.route");
 Route(app);
 // End Routers
 
-// socket io
-const io = new Server(server);
-
-io.on("connection", (socket) => {
-    console.log("a user connected", socket.id);
-});
-// socket io
-
 server.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
+    console.log(`App listening on port ${port}`);
 });

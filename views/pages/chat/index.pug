@@ -58,8 +58,8 @@ block main
                         div(class="time")
                             | 12:03
                     img(alt="David Smith", height="40", class="img-sent", src="https://storage.googleapis.com/a1aa/image/2HSuM7PWkMr4AR7OeKT7xe5TMXlniIaZ6bZg2ydMpYj7vKyTA.jpg", width="40")
-            div(class="message-input")
+            form(action="/chats", method="post" class="message-input") 
                 i(class="fas fa-paperclip me-2")
-                input(placeholder="Your message", type="text")
-                button
+                input(placeholder="Your message", type="text" name="content")
+                button(type="submit")
                     | Submit
