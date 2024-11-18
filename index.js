@@ -1,6 +1,11 @@
 const express = require("express");
-const app = express();
+const { createServer } = require("node:http");
+const { Server } = require("socket.io");
 const bodyParser = require("body-parser");
+
+const app = express();
+const server = createServer(app);
+
 // config env
 require("dotenv").config();
 const port = process.env.PORT;
@@ -30,6 +35,14 @@ const Route = require("./routes/index.route");
 Route(app);
 // End Routers
 
-app.listen(port, () => {
+// socket io
+const io = new Server(server);
+
+io.on("connection", (socket) => {
+    console.log("a user connected", socket.id);
+});
+// socket io
+
+server.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });
