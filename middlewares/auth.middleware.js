@@ -14,7 +14,6 @@ module.exports.authRequired = async (req, res, next) => {
     }
 
     res.locals.userInfo = user;
-    console.log(user);
 
     next();
 };
