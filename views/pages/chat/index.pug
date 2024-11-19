@@ -6,11 +6,16 @@ block main
 
     div(class="d-flex")
         div(class="sidebar")
-            div(class="d-flex align-items-center mb-4")
+            div(class="info-user-dropdown d-flex align-items-center mb-4")
                 img(alt="Logo", class="me-2", height="40", src="https://storage.googleapis.com/a1aa/image/T1lqvK8RiQpiLhXPun8MnOKMbe2eNTOKWUXgxtFwYhIAwKyTA.jpg", width="40")
                 span
                     | Design Cafe
                 i(class="fas fa-chevron-down ms-auto")
+                div(class="dropdown-menu d-none")
+                    a(class="dropdown-item", href="/user/info") Hồ sơ
+                    a(class="dropdown-item", href="/settings") Cài đặt
+                    a(class="dropdown-item", href="/user/logout") Đăng xuất
+                
             div(class="search-box")
                 input(class="form-control", placeholder="Search here", type="text")
             ul(class="user-list")

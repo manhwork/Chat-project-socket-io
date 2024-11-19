@@ -195,3 +195,16 @@ body {
 ul {
     margin: 0;
 }
+
+.info-user-dropdown {
+    position: relative;
+    cursor: pointer;
+}
+
+.info-user-dropdown .dropdown-menu {
+    display: block;
+    width: 100%;
+    position: absolute;
+    top: 110%;
+    /* left: 20%; */
+}

@@ -1,4 +1,4 @@
-// const socket = io();
+const socket = io();
 
 // CLIENT_SEND_MESS
 const messageForm = document.querySelector(".message-input");
@@ -47,3 +47,14 @@ if (notificationShow) {
     }, 3000);
 }
 // end  notification
+
+// show dropdown
+const infoUserDropdown = document.querySelector(".info-user-dropdown");
+if (infoUserDropdown) {
+    infoUserDropdown.addEventListener("click", (e) => {
+        const exitsDropdown = false;
+        const dropdownenu = document.querySelector(".dropdown-menu");
+        dropdownenu.classList.toggle("d-none");
+    });
+}
+// end show dropdown
