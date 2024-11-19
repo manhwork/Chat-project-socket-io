@@ -8,88 +8,64 @@ block main
     div(class="container-fluid")
         div(class="row")
             div(class="col-3 sidebar")
-                div(class="d-flex align-items-center mb-4")
-                    img(alt="Logo", class="me-2", height="40", src="https://storage.googleapis.com/a1aa/image/GilBG0s8K57vPNm3l4L4IfOies5GRt0WhI6IorUs3oZpXnwTA.jpg", width="40")
-                    span
-                        | Design Cafe
-                    i(class="fas fa-chevron-down ms-auto")
-                div(class="search-box")
-                    input(class="form-control", placeholder="Search here", type="text")
                 ul(class="menu-list")
                     li(class="active")
-                        i(class="fas fa-user")
-                        | Thông Tin Cá Nhân
+                        a(href="/user/info") 
+                            i(class="fas fa-user")
+                            | Thông Tin Cá Nhân
                     li
-                        i(class="fas fa-key")
-                        | Đổi Mật Khẩu
+                        a(href="/user/change/password") 
+                            i(class="fas fa-key")
+                            | Đổi Mật Khẩu
                     li
-                        i(class="fas fa-sign-out-alt")
-                        | Đăng Xuất
+                        a(href="/user/logout") 
+                            i(class="fas fa-sign-out-alt")
+                            | Đăng Xuất
                     li
-                        i(class="fas fa-users")
-                        | Danh Sách Bạn Bè
+                        a(href="/user/list-friend") 
+                            i(class="fas fa-users")
+                            | Danh Sách Bạn Bè
                     li
-                        i(class="fas fa-layer-group")
-                        | Danh Sách Nhóm
+                        a(href="/user/list-group") 
+                            i(class="fas fa-layer-group")
+                            | Danh Sách Nhóm
+                    li 
+                        a(href="/chats")
+                            i(class="fas fa-layer-group")
+                            | Quay lại
             div(class="col-9")
                 div(class="container profile-container")
                     div(class="profile-header")
-                        img(alt="User Image", height="80", src="https://storage.googleapis.com/a1aa/image/U28v49suejUnJ6le7DnNAEcGwyrMmiRz06u2P9KY91mqXnwTA.jpg", width="80")
+                        img(class="user-img" alt="User Image", height="80", src="https://storage.googleapis.com/a1aa/image/U28v49suejUnJ6le7DnNAEcGwyrMmiRz06u2P9KY91mqXnwTA.jpg", width="80")
+                        input(type="file", name="avatar" class="file-input" accept="image/*")
                         div
                             div(class="name")
-                                | David Smith
+                                | #{userInfo.fullName}
                             div(class="email")
-                                | david.smith@example.com
-                    div(class="profile-body")
+                                | #{userInfo.email}
+                    form(
+                        class="profile-body"
+                        action="/user/info"
+                        method="post"
+                    )
                         div(class="section-title")
                             | Thông Tin Cá Nhân
                         div(class="info-group")
                             label(for="name")
                                 | Họ và Tên
-                            input#name(type="text", value="David Smith")
+                            input#name(type="text", name="fullName" value=userInfo.fullName)
                         div(class="info-group")
                             label(for="email")
                                 | Email
-                            input#email(type="email", value="david.smith@example.com")
+                            input#email(type="email", name="email" value=userInfo.email)
                         div(class="info-group")
                             label(for="phone")
                                 | Số Điện Thoại
-                            input#phone(type="text", value="0123456789")
+                            input#phone(type="text", name="phone" value=userInfo.phone)
                         div(class="info-group")
                             label(for="address")
                                 | Địa Chỉ
-                            input#address(type="text", value="123 Đường ABC, Quận 1, TP. HCM")
-                        div(class="section-title")
-                            | Danh Sách Bạn Bè
-                        ul(class="friends-list")
-                            li
-                                img(alt="Friend Image", height="40", src="https://storage.googleapis.com/a1aa/image/U28v49suejUnJ6le7DnNAEcGwyrMmiRz06u2P9KY91mqXnwTA.jpg", width="40")
-                                span
-                                    | Angee Sam
-                            li
-                                img(alt="Friend Image", height="40", src="https://storage.googleapis.com/a1aa/image/U28v49suejUnJ6le7DnNAEcGwyrMmiRz06u2P9KY91mqXnwTA.jpg", width="40")
-                                span
-                                    | Kail Matt
-                            li
-                                img(alt="Friend Image", height="40", src="https://storage.googleapis.com/a1aa/image/U28v49suejUnJ6le7DnNAEcGwyrMmiRz06u2P9KY91mqXnwTA.jpg", width="40")
-                                span
-                                    | Sumana Biswas
-                        div(class="section-title")
-                            | Danh Sách Nhóm
-                        ul(class="groups-list")
-                            li
-                                img(alt="Group Image", height="40", src="https://storage.googleapis.com/a1aa/image/U28v49suejUnJ6le7DnNAEcGwyrMmiRz06u2P9KY91mqXnwTA.jpg", width="40")
-                                span
-                                    | Nhóm Thiết Kế
-                            li
-                                img(alt="Group Image", height="40", src="https://storage.googleapis.com/a1aa/image/U28v49suejUnJ6le7DnNAEcGwyrMmiRz06u2P9KY91mqXnwTA.jpg", width="40")
-                                span
-                                    | Nhóm Phát Triển
-                            li
-                                img(alt="Group Image", height="40", src="https://storage.googleapis.com/a1aa/image/U28v49suejUnJ6le7DnNAEcGwyrMmiRz06u2P9KY91mqXnwTA.jpg", width="40")
-                                span
-                                    | Nhóm Marketing
-                    div(class="profile-footer")
-                        button
+                            input#address(type="text", name="address" value=userInfo.address)
+                        button(class="profile-footer" type="submit")
                             | Cập Nhật
         

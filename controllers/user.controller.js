@@ -92,5 +92,7 @@ module.exports.logout = async (req, res) => {
 // [GET] /user/info
 
 module.exports.getInfo = async (req, res) => {
-    res.render("../views/pages/user/info.pug");
+    res.render("../views/pages/user/info.pug", {
+        pageTitle: "InfoUser",
+    });
 };

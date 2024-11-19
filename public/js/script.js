@@ -52,9 +52,19 @@ if (notificationShow) {
 const infoUserDropdown = document.querySelector(".info-user-dropdown");
 if (infoUserDropdown) {
     infoUserDropdown.addEventListener("click", (e) => {
-        const exitsDropdown = false;
         const dropdownenu = document.querySelector(".dropdown-menu");
         dropdownenu.classList.toggle("d-none");
     });
 }
 // end show dropdown
+
+// upload avatar
+const profileHeader = document.querySelector(".profile-header");
+if (profileHeader) {
+    const userImage = document.querySelector(".user-img");
+    userImage.addEventListener("click", (e) => {
+        const fileInput = document.querySelector(".file-input");
+        fileInput.click();
+    });
+}
+// end upload avatar
