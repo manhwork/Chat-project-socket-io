@@ -17,4 +17,10 @@ router.get("/logout", controller.logout);
 
 router.get("/info", authRequiredMiddleware.authRequired, controller.getInfo);
 
+router.get(
+    "/change/password",
+    authRequiredMiddleware.authRequired,
+    controller.changePassword
+);
+
 module.exports = router;

@@ -96,3 +96,9 @@ module.exports.getInfo = async (req, res) => {
         pageTitle: "InfoUser",
     });
 };
+
+// [GET] /user/change/password
+
+module.exports.changePassword = async (req, res) => {
+    res.render("../views/pages/user/changpassword");
+};
