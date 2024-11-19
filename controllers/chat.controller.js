@@ -1,4 +1,5 @@
 const Chat = require("../models/chat.model");
+const User = require("../models/user.model");
 
 // [GET] /chat/
 module.exports.index = async (req, res) => {
@@ -16,12 +17,15 @@ module.exports.index = async (req, res) => {
             });
         });
     });
-    res.render("../views/pages/chat/index.pug");
+
+    res.render("../views/pages/chat/index.pug", {
+        pageTitle: "Chats",
+    });
 };
 
 // [POST] /chat/
 
-module.exports.message = async (req, res) => {
+module.exports.messagePost = async (req, res) => {
     console.log(req.body);
     res.send("ok");
 };

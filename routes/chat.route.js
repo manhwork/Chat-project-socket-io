@@ -5,6 +5,6 @@ const controller = require("../controllers/chat.controller");
 
 router.get("/", controller.index);
 
-router.post("/", controller.message);
+router.post("/", controller.messagePost);
 
 module.exports = router;

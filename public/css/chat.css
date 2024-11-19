@@ -208,3 +208,7 @@ ul {
     top: 110%;
     /* left: 20%; */
 }
+
+.fullName {
+    overflow-wrap: anywhere;
+}
