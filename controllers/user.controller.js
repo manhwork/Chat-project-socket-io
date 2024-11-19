@@ -18,8 +18,8 @@ module.exports.register = async (req, res) => {
 // [POST] /user/register
 
 module.exports.registerPost = async (req, res) => {
-    console.log(req.body);
     const user = new User(req.body);
-    // console.log(user);
-    res.send("ok");
+    console.log(user);
+    req.flash("success", "Đăng kí tài khoản thành công !");
+    res.redirect("/user/register");
 };

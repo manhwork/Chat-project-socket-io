@@ -2,8 +2,8 @@ const socket = io();
 
 // CLIENT_SEND_MESS
 const messageForm = document.querySelector(".message-input");
-const messageInput = messageForm.querySelector("input");
 if (messageForm) {
+    const messageInput = messageForm.querySelector("input");
     messageForm.addEventListener("submit", (e) => {
         e.preventDefault();
         if (messageInput.value) {
@@ -32,3 +32,18 @@ if (messageList) {
     });
 }
 // end SERVER_SEND_MESS
+
+// notification
+const notificationShow = document.querySelector(`[notification-show]`);
+if (notificationShow) {
+    const closeNotification = notificationShow.querySelector(
+        ".close-notification"
+    );
+    closeNotification.addEventListener("click", (e) => {
+        notificationShow.classList.add("d-none");
+    });
+    setTimeout(() => {
+        notificationShow.classList.add("d-none");
+    }, 3000);
+}
+// end  notification
