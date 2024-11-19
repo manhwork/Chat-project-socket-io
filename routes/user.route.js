@@ -5,6 +5,8 @@ const userValidate = require("../validates/user.validate");
 
 router.get("/login", controller.index);
 
+router.post("/login", controller.loginPost);
+
 router.get("/register", controller.register);
 
 router.post("/register", userValidate.register, controller.registerPost);
