@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema(
         avatar: String,
         status: {
             type: String,
-            default: "active",
+            default: "active", // active warrning inactive
         },
         token: {
             type: String,

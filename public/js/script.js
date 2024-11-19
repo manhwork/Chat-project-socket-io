@@ -1,4 +1,4 @@
-const socket = io();
+// const socket = io();
 
 // CLIENT_SEND_MESS
 const messageForm = document.querySelector(".message-input");

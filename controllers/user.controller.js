@@ -18,8 +18,37 @@ module.exports.register = async (req, res) => {
 // [POST] /user/register
 
 module.exports.registerPost = async (req, res) => {
-    const user = new User(req.body);
-    console.log(user);
-    req.flash("success", "Đăng kí tài khoản thành công !");
-    res.redirect("/user/register");
+    try {
+        const { email, password, confirmPassword } = req.body;
+        const existEmail = await User.findOne({
+            status: "active",
+            email: email,
+        });
+
+        if (existEmail) {
+            req.flash("error", "Email đã tồn tại !");
+            res.redirect("back");
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            req.flash("error", "Mật khẩu không trùng khớp !");
+            res.redirect("back");
+            return;
+        }
+
+        const user = new User(req.body);
+        await user.save();
+
+        req.flash(
+            "success",
+            `Đăng kí tài khoản thành công !
+                    Vui lòng đăng nhập !
+            `
+        );
+        res.redirect("/user/register");
+    } catch (error) {
+        req.flash("error", "Tạo tài khoản thất bại !");
+        res.redirect("back");
+    }
 };
