@@ -41,7 +41,6 @@ app.set("view engine", "pug");
 const Route = require("./routes/index.route");
 Route(app);
 // End Routers
-
 server.listen(port, () => {
     console.log(`App listening on port ${port}`);
 });

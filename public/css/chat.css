@@ -53,6 +53,7 @@ body {
 .sidebar .user-list li .time {
     font-size: 12px;
     color: #888;
+    margin-right: 5px;
 }
 
 .sidebar .user-list li .badge {
@@ -120,6 +121,7 @@ body {
     list-style: none;
     padding: 0;
     height: 80vh;
+    overflow-y: auto;
 }
 
 .content .messages li {
@@ -144,6 +146,8 @@ body {
     padding: 10px;
     border-radius: 10px;
     position: relative;
+    overflow-wrap: break-word;
+    white-space: normal;
 }
 
 .content .messages li .message.sent {
@@ -166,6 +170,7 @@ body {
     display: flex;
     align-items: center;
     padding: 10px;
+    margin: 0;
     background-color: #fff;
     border-top: 1px solid #ddd;
 }

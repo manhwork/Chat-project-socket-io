@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const generateToken = require("../helpers/generateToken");
 
-const userSchema = mongoose.Schema(
+const userSchema = new mongoose.Schema(
     {
         fullName: String,
         email: String,
