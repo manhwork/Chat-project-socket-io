@@ -21,8 +21,8 @@ block main
 				action="/user/login" 
 				method="post"
 			) 
-				input(class="form-control", name="email" placeholder="Email", type="text")
-				input(class="form-control", name="password" placeholder="Password", type="password")
+				input(class="form-control", name="email" placeholder="Email", type="email" minlength="6" required)
+				input(class="form-control", name="password" placeholder="Password", type="password" minlength="6" required)
 				button(type="submit" class="btn btn-success w-100")
 					| Login
 			a(class="forgot-password", href="/user/forgot")

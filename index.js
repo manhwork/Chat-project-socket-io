@@ -2,12 +2,20 @@ const express = require("express");
 const { createServer } = require("node:http");
 const { Server } = require("socket.io");
 const bodyParser = require("body-parser");
+const flash = require("express-flash");
+const cookieParser = require("cookie-parser");
+const session = require("express-session");
 
 const app = express();
 const server = createServer(app);
 
-// socket io
+// set up flash
+app.use(cookieParser("keyboard cat"));
+app.use(session({ cookie: { maxAge: 60000 } }));
+app.use(flash());
+// end set up flash
 
+// socket io
 const io = new Server(server);
 global._io = io;
 
