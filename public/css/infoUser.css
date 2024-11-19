@@ -1,0 +1,125 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+}
+
+.sidebar {
+    background-color: #fff;
+    height: 100vh;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+}
+
+.sidebar .search-box {
+    margin-bottom: 20px;
+}
+
+.sidebar .menu-list {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar .menu-list li {
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.sidebar .menu-list li.active {
+    background-color: #f5f5f5;
+}
+
+.sidebar .menu-list li i {
+    margin-right: 10px;
+}
+
+.profile-container {
+    max-width: 800px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-header img {
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.profile-header .name {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.profile-header .email {
+    font-size: 14px;
+    color: #888;
+}
+
+.profile-body {
+    margin-top: 20px;
+}
+
+.profile-body .section-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.profile-body .info-group {
+    margin-bottom: 20px;
+}
+
+.profile-body .info-group label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.profile-body .info-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.profile-footer {
+    text-align: right;
+}
+
+.profile-footer button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+.friends-list,
+.groups-list {
+    list-style: none;
+    padding: 0;
+}
+
+.friends-list li,
+.groups-list li {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    background-color: #f5f5f5;
+}
+
+.friends-list li img,
+.groups-list li img {
+    border-radius: 50%;
+    margin-right: 10px;
+}

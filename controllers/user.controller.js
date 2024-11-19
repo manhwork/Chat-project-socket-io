@@ -88,3 +88,9 @@ module.exports.logout = async (req, res) => {
     res.clearCookie("tokenUser");
     res.redirect("/user/login");
 };
+
+// [GET] /user/info
+
+module.exports.getInfo = async (req, res) => {
+    res.render("../views/pages/user/info.pug");
+};
