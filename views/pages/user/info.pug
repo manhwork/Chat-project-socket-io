@@ -1,10 +1,14 @@
 extend ../../layout/base.pug
 include ../../mixins/sidebar.pug
+include ../../mixins/alert.pug
 
 
 block main 
 
     link(rel="stylesheet", href="/css/infoUser.css")
+
+    +alert-success(3000)
+    +alert-error(3000)
 
     div(class="container-fluid")
         div(class="row")

@@ -97,6 +97,40 @@ module.exports.getInfo = async (req, res) => {
     });
 };
 
+// [POST] /user/info
+
+module.exports.postInfo = async (req, res) => {
+    const email = req.body.email;
+    try {
+        const tokenUser = req.cookies.tokenUser;
+
+        const existEmail = await User.findOne({
+            email: email,
+            token: { $ne: tokenUser },
+        });
+
+        if (existEmail) {
+            req.flash("error", "Email đã tồn tài !");
+            res.redirect("back");
+            return;
+        }
+
+        await User.updateOne(
+            {
+                status: "active",
+                token: tokenUser,
+            },
+            req.body
+        );
+
+        req.flash("success", "Cập nhật thành công !");
+        res.redirect("back");
+    } catch (error) {
+        req.flash("error", "Cập nhật thất bại !");
+        res.redirect("back");
+    }
+};
+
 // [GET] /user/change/password
 
 module.exports.changePassword = async (req, res) => {

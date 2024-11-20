@@ -7,6 +7,8 @@ const userSchema = new mongoose.Schema(
         email: String,
         password: String,
         avatar: String,
+        phone: String,
+        address: String,
         status: {
             type: String,
             default: "active", // active warrning inactive

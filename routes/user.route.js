@@ -17,6 +17,8 @@ router.get("/logout", controller.logout);
 
 router.get("/info", authRequiredMiddleware.authRequired, controller.getInfo);
 
+router.post("/info", authRequiredMiddleware.authRequired, controller.postInfo);
+
 router.get(
     "/change/password",
     authRequiredMiddleware.authRequired,

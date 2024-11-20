@@ -1,0 +1,18 @@
+body {
+    position: relative;
+}
+
+.message {
+    position: absolute;
+    right: 10px;
+    top: 10%;
+    width: 30%;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.close-notification {
+    font-size: 20px;
+    cursor: pointer;
+}
