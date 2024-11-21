@@ -3,12 +3,15 @@ const User = require("../models/user.model");
 
 // [GET] /chat/
 module.exports.index = async (req, res) => {
+    const user = res.locals.userInfo;
+
     _io.once("connection", (socket) => {
         console.log("a user connected", socket.id);
         socket.on("CLIENT_SEND_MESS", async (content) => {
             // Luu vao db
             const chat = new Chat({
                 content: content,
+                user_id: user._id,
             });
             await chat.save();
             // end luu vao db
@@ -18,8 +21,21 @@ module.exports.index = async (req, res) => {
         });
     });
 
+    const chats = await Chat.find({
+        status: "sent",
+    });
+
+    for (const chat of chats) {
+        const infoUser = await User.findOne({
+            _id: chat.user_id,
+            status: "active",
+        });
+        chat.fullName = infoUser.fullName;
+    }
+
     res.render("../views/pages/chat/index.pug", {
         pageTitle: "Chats",
+        chats: chats,
     });
 };
 
