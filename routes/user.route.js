@@ -25,4 +25,10 @@ router.get(
     controller.changePassword
 );
 
+router.post(
+    "/change/password",
+    authRequiredMiddleware.authRequired,
+    controller.changePasswordPost
+);
+
 module.exports = router;

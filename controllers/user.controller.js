@@ -134,5 +134,44 @@ module.exports.postInfo = async (req, res) => {
 // [GET] /user/change/password
 
 module.exports.changePassword = async (req, res) => {
-    res.render("../views/pages/user/changpassword");
+    res.render("../views/pages/user/changpassword", {
+        pageTitle: "ChangePassword",
+    });
+};
+
+// [POST] /user/change/password
+
+module.exports.changePasswordPost = async (req, res) => {
+    const user = res.locals.userInfo;
+    const { oldPassword, newPassword, confirmPassword } = req.body;
+
+    if (oldPassword !== user.password) {
+        req.flash("error", "Mật khẩu cũ không chính xác !");
+        res.redirect("back");
+        return;
+    }
+
+    if (oldPassword === newPassword) {
+        req.flash("error", "Vui lòng nhập mật khẩu mới khác mật khẩu cũ !");
+        res.redirect("back");
+        return;
+    }
+
+    if (newPassword !== confirmPassword) {
+        req.flash("error", "Mật khẩu không trùng khớp !");
+        res.redirect("back");
+        return;
+    }
+
+    await User.updateOne(
+        {
+            token: user.token,
+        },
+        {
+            password: newPassword,
+        }
+    );
+
+    req.flash("success", "Cập nhật mật khẩu mới thành công !");
+    res.redirect("/user/change/password");
 };
