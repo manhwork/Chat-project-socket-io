@@ -19,15 +19,31 @@ const messageList = document.querySelector(".messages");
 if (messageList) {
     socket.on("SERVER_SEND_MESS", (data) => {
         const li = document.createElement("li");
+        const userIdElement = document.querySelector("[user-id]");
+        const userId = userIdElement.getAttribute("user-id");
 
-        li.innerHTML = `
-            <div class="message sent">
+        if (userId === data.user_id) {
+            li.innerHTML = `
+                <div class="message sent">
+                    ${data.content}
+                    <div class="time">12:03</div>
+                </div>
+                <img class="img-sent" alt="David Smith" height="40"
+                src="https://storage.googleapis.com/a1aa/image/2HSuM7PWkMr4AR7OeKT7xe5TMXlniIaZ6bZg2ydMpYj7vKyTA.jpg" width="40">            
+            `;
+        } else {
+            li.innerHTML = `
+            <img class="img-received" alt="User" height="40"
+                src="https://storage.googleapis.com/a1aa/image/14q8RMRXnNYBMh98MWeVsUWwWJjUzDqUPB2BQyo1BCSfvKyTA.jpg" width="40">
+            <div class="message received">
                 ${data.content}
-                <div class="time">12:03</div>
+                <div class="time">12:03
+
+                </div>
             </div>
-            <img class="img-sent" alt="David Smith" height="40"
-            src="https://storage.googleapis.com/a1aa/image/2HSuM7PWkMr4AR7OeKT7xe5TMXlniIaZ6bZg2ydMpYj7vKyTA.jpg" width="40">            
-        `;
+            `;
+        }
+
         messageList.appendChild(li);
     });
 }

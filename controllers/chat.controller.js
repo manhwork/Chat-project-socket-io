@@ -4,6 +4,8 @@ const User = require("../models/user.model");
 // [GET] /chat/
 module.exports.index = async (req, res) => {
     const user = res.locals.userInfo;
+    const user_id = user._id;
+    const fullName = user.fullName;
 
     _io.once("connection", (socket) => {
         console.log("a user connected", socket.id);
@@ -17,6 +19,8 @@ module.exports.index = async (req, res) => {
             // end luu vao db
             _io.emit("SERVER_SEND_MESS", {
                 content,
+                user_id,
+                fullName,
             });
         });
     });
