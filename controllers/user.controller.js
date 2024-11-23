@@ -175,3 +175,11 @@ module.exports.changePasswordPost = async (req, res) => {
     req.flash("success", "Cập nhật mật khẩu mới thành công !");
     res.redirect("/user/change/password");
 };
+
+// [GET] /user/list-friend
+
+module.exports.getListFriend = async (req, res) => {
+    res.render("../views/pages/user/listFriend.pug", {
+        pageTitle: "Danh sách người dùng",
+    });
+};

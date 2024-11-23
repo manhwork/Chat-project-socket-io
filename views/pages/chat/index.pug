@@ -55,9 +55,9 @@ block main
                     if(chat.user_id == userInfo._id)
                         li
                             div(class="message sent")
-                                | #{chat.content}
-                                div(class="time")
-                                    | 12:03
+                                //- div(class="time")
+                                //-     | 12:03
+                                div(class="inner-msg") #{chat.content}
                             img(alt="David Smith", height="40", class="img-sent", src="https://storage.googleapis.com/a1aa/image/2HSuM7PWkMr4AR7OeKT7xe5TMXlniIaZ6bZg2ydMpYj7vKyTA.jpg", width="40")
                             //- div #{chat.fullName}
                     else 
@@ -65,9 +65,9 @@ block main
                             img(alt="User", height="40", src="https://storage.googleapis.com/a1aa/image/14q8RMRXnNYBMh98MWeVsUWwWJjUzDqUPB2BQyo1BCSfvKyTA.jpg", class="img-received", width="40")
                             //- div #{chat.fullName}
                             div(class="message received")
-                                | #{chat.content}
-                                div(class="time")
-                                    | 12:03
+                                div(class="inner-msg") #{chat.content}
+                                //- div(class="time")
+                                //-     | 12:03
             form(action="/chats", method="post" class="message-input") 
                 i(class="fas fa-paperclip me-2")
                 input(placeholder="Your message", type="text" name="content")

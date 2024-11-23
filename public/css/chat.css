@@ -212,3 +212,7 @@ ul {
 .fullName {
     overflow-wrap: anywhere;
 }
+
+.inner-msg {
+    overflow-wrap: anywhere;
+}

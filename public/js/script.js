@@ -1,5 +1,12 @@
 const socket = io();
 
+// Scrol bottom page
+const messageElement = document.querySelector(".messages");
+if (messageElement) {
+    messageElement.scrollTop = messageElement.scrollHeight;
+}
+// end Scroll bottom page
+
 // CLIENT_SEND_MESS
 const messageForm = document.querySelector(".message-input");
 if (messageForm) {
@@ -45,6 +52,7 @@ if (messageList) {
         }
 
         messageList.appendChild(li);
+        messageElement.scrollTop = messageElement.scrollHeight;
     });
 }
 // end SERVER_SEND_MESS

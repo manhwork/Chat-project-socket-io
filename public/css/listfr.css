@@ -1,0 +1,95 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+}
+
+.sidebar {
+    background-color: #fff;
+    height: 100vh;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+}
+
+.sidebar .search-box {
+    margin-bottom: 20px;
+}
+
+.sidebar .menu-list {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar .menu-list li {
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.sidebar .menu-list li.active {
+    background-color: #f5f5f5;
+}
+
+.sidebar .menu-list li i {
+    margin-right: 10px;
+}
+
+.friends-container {
+    max-width: 800px;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.friends-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.friends-header .title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.friends-body {
+    margin-top: 20px;
+}
+
+.friends-body .section-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.friends-list,
+.pending-list {
+    list-style: none;
+    padding: 0;
+}
+
+.friends-list li,
+.pending-list li {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    background-color: #f5f5f5;
+}
+
+.friends-list li img,
+.pending-list li img {
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.pending-list li .actions {
+    margin-left: auto;
+}
+
+.pending-list li .actions button {
+    margin-left: 10px;
+}

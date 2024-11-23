@@ -31,4 +31,10 @@ router.post(
     controller.changePasswordPost
 );
 
+router.get(
+    "/list-friend",
+    authRequiredMiddleware.authRequired,
+    controller.getListFriend
+);
+
 module.exports = router;
