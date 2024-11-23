@@ -9,6 +9,10 @@ mixin sidebar(page)
                 a(href="/user/change/password") 
                     i(class="fas fa-key")
                     | Đổi Mật Khẩu
+            li(class= (page == "listuser" ? "active" : ""))
+                a(href="/users/not-friend") 
+                    i(class="fas fa-user-friends")
+                    | Danh sách người dùng
             li(class= (page == "list-friend" ? "active" : ""))
                 a(href="/user/list-friend") 
                     i(class="fas fa-users")

@@ -1,0 +1,34 @@
+extend ../../layout/base.pug
+include ../../mixins/sidebar.pug
+include ../../mixins/alert.pug
+
+
+block main 
+
+    link(rel="stylesheet", href="/css/infoUser.css")
+
+    +alert-success(3000)
+    +alert-error(3000)
+
+    div(class="container-fluid")
+        div(class="row")
+
+            +sidebar("listuser")
+
+            div(class="col-9")
+                div(class="container friends-container")
+                    div(class="friends-header")
+                        div(class="title")
+                            | Danh Sách người dùng
+                    div(class="friends-body")
+                        each user in users 
+                            ul(class="pending-list")
+                                li
+                                    img(alt="Pending Friend Image", height="40", src="https://storage.googleapis.com/a1aa/image/U28v49suejUnJ6le7DnNAEcGwyrMmiRz06u2P9KY91mqXnwTA.jpg", width="40")
+                                    span
+                                        | #{user.fullName}
+                                    form(class="actions" action="")
+                                        button(class="btn btn-success btn-sm")
+                                            | Gửi kết bạn
+                                        button(class="btn btn-danger btn-sm")
+                                            | Huỷ
