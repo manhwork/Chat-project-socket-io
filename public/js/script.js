@@ -103,13 +103,20 @@ if (buttonSendAcpFriend) {
             const notFriendId = button.getAttribute("button-send-acp-friend");
 
             if (button.classList.contains("btn-success")) {
+                // phát sự kiện muốn kết bạn
                 socket.emit("CLIENT_SEND_SENT_FRIEND", {
                     notFriendId: notFriendId,
                 });
+
                 button.classList.remove("btn-success");
                 button.classList.add("btn-danger");
                 button.textContent = "Đã gửi kết bạn";
             } else {
+                // phát sự kiện muốn kết bạn
+                socket.emit("CLIENT_SEND_CANCEL_SENT_FRIEND", {
+                    notFriendId: notFriendId,
+                });
+
                 button.classList.remove("btn-danger");
                 button.classList.add("btn-success");
                 button.textContent = "Gửi kết bạn";

@@ -19,7 +19,7 @@ block main
                 div(class="container friends-container")
                     div(class="friends-header")
                         div(class="title")
-                            | Danh Sách người dùng
+                            | Danh Sách người dùng 
                     div(class="friends-body")
                         each user in users 
                             ul(class="pending-list" not-friend-id=user.id)
@@ -28,5 +28,9 @@ block main
                                     span
                                         | #{user.fullName}
                                     div(class="actions")
-                                        button(class="btn btn-success btn-sm" button-send-acp-friend=user.id)
-                                            | Gửi kết bạn
+                                        if(userInfo.requestFriends.includes(user.id))
+                                            button(class="btn btn-danger btn-sm" button-send-acp-friend=user.id)
+                                                | Đã gửi kết bạn 
+                                        else 
+                                            button(class="btn btn-success btn-sm" button-send-acp-friend=user.id)
+                                                | Gửi kết bạn
