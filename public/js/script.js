@@ -92,3 +92,28 @@ if (profileHeader) {
     });
 }
 // end upload avatar
+
+// CLIENT_SEND_ADD_FRIEND
+const buttonSendAcpFriend = document.querySelectorAll(
+    "[button-send-acp-friend]"
+);
+if (buttonSendAcpFriend) {
+    for (const button of buttonSendAcpFriend)
+        button.addEventListener("click", (e) => {
+            const notFriendId = button.getAttribute("button-send-acp-friend");
+
+            if (button.classList.contains("btn-success")) {
+                socket.emit("CLIENT_SEND_SENT_FRIEND", {
+                    notFriendId: notFriendId,
+                });
+                button.classList.remove("btn-success");
+                button.classList.add("btn-danger");
+                button.textContent = "Đã gửi kết bạn";
+            } else {
+                button.classList.remove("btn-danger");
+                button.classList.add("btn-success");
+                button.textContent = "Gửi kết bạn";
+            }
+        });
+}
+// End CLIENT_SEND_ADD_FRIEND

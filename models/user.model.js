@@ -9,13 +9,21 @@ const userSchema = new mongoose.Schema(
         avatar: String,
         phone: String,
         address: String,
+        acceptFriends: Array,
+        requestFriends: Array,
+        friendsList: [
+            {
+                user_id: String,
+                room_id: String,
+            },
+        ],
         status: {
             type: String,
             default: "active", // active warrning inactive
         },
         token: {
             type: String,
-            default: generateToken(20),
+            default: generateToken.generateRandomString(20),
         },
     },
     {

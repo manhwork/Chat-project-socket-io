@@ -22,13 +22,11 @@ block main
                             | Danh Sách người dùng
                     div(class="friends-body")
                         each user in users 
-                            ul(class="pending-list")
+                            ul(class="pending-list" not-friend-id=user.id)
                                 li
                                     img(alt="Pending Friend Image", height="40", src="https://storage.googleapis.com/a1aa/image/U28v49suejUnJ6le7DnNAEcGwyrMmiRz06u2P9KY91mqXnwTA.jpg", width="40")
                                     span
                                         | #{user.fullName}
-                                    form(class="actions" action="")
-                                        button(class="btn btn-success btn-sm")
+                                    div(class="actions")
+                                        button(class="btn btn-success btn-sm" button-send-acp-friend=user.id)
                                             | Gửi kết bạn
-                                        button(class="btn btn-danger btn-sm")
-                                            | Huỷ
