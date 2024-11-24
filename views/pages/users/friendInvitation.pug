@@ -18,19 +18,23 @@ block main
             div(class="col-9")
                 div(class="container friends-container")
                     div(class="friends-header")
-                        div(class="title")
-                            | Kết Bạn Chờ Xác Nhận
+                        if(friendRequests.length == 0)
+                            div(class="title")
+                                | Không có lời mời kết bạn !!!!!!
+                        else 
+                            div(class="title")
+                                | Kết Bạn Chờ Xác Nhận
                     div(class="friends-body")
 
-                        ul(class="pending-list")
-                            each item in acceptFriendsListObj
-                                li
+                        ul(class="pending-list" )
+                            each item in friendRequests
+                                li(class="pending-user" invitation-friend-id=item.userId)
                                     img(alt="Pending Friend Image", height="40", src="https://storage.googleapis.com/a1aa/image/U28v49suejUnJ6le7DnNAEcGwyrMmiRz06u2P9KY91mqXnwTA.jpg", width="40")
                                     span
-                                        | #{item.fullNameNotFriendUser}
-                                    div(class="actions" invitation-friend-id=item.notFriendUserId)
-                                        button(class="btn btn-success btn-sm")
+                                        | #{item.fullName}
+                                    div(class="actions" )
+                                        button(class="btn btn-success btn-sm accept-friend")
                                             | Chấp Nhận
-                                        button(class="btn btn-danger btn-sm")
+                                        button(class="btn btn-danger btn-sm cancel-friend")
                                             | Từ Chối
                 

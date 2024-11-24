@@ -124,3 +124,30 @@ if (buttonSendAcpFriend) {
         });
 }
 // End CLIENT_SEND_ADD_FRIEND
+
+// accept-friend cancel-friend
+const pendingUsers = document.querySelectorAll(".pending-user");
+if (pendingUsers) {
+    pendingUsers.forEach((pendingUser) => {
+        const userId = pendingUser.getAttribute("invitation-friend-id");
+
+        // Nút chấp nhận kết bạn
+        const acceptFriendButton = pendingUser.querySelector(".accept-friend");
+        if (acceptFriendButton) {
+            acceptFriendButton.addEventListener("click", () => {
+                socket.emit("CLIENT_ACCEPT_FRIEND", { userId: userId });
+                pendingUser.remove(); // Xóa phần tử pendingUser khỏi DOM sau khi kết bạn
+            });
+        }
+
+        // Nút từ chối kết bạn
+        const cancelFriendButton = pendingUser.querySelector(".cancel-friend");
+        if (cancelFriendButton) {
+            cancelFriendButton.addEventListener("click", () => {
+                socket.emit("CLIENT_REJECT_FRIEND", { userId: userId });
+                pendingUser.remove(); // Xóa phần tử pendingUser khỏi DOM sau khi từ chối kết bạn
+            });
+        }
+    });
+}
+// End accept-friend cancel-friend
