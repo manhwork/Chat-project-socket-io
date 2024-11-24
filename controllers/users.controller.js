@@ -65,3 +65,31 @@ module.exports.index = async (req, res) => {
         users: users,
     });
 };
+
+// [GET] / users / friend - invitation;
+module.exports.invitaion = async (req, res) => {
+    const user = res.locals.userInfo;
+
+    const acceptFriendsList = user.acceptFriends;
+    const acceptFriendsListObj = new Array();
+
+    if (acceptFriendsList.length > 0) {
+        for (const notFriendUserId of acceptFriendsList) {
+            const notFriendUser = await User.findOne({
+                status: "active",
+                _id: notFriendUserId,
+            });
+
+            const fullNameNotFriendUser = notFriendUser.fullName;
+
+            acceptFriendsListObj.push({
+                notFriendUserId: notFriendUserId,
+                fullNameNotFriendUser: fullNameNotFriendUser,
+            });
+        }
+    }
+    res.render("../views/pages/users/friendInvitation.pug", {
+        pageTitle: "Friend invitation",
+        acceptFriendsListObj: acceptFriendsListObj,
+    });
+};

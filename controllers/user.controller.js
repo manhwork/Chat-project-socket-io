@@ -76,7 +76,7 @@ module.exports.registerPost = async (req, res) => {
                     Vui lòng đăng nhập !
             `
         );
-        res.redirect("/user/register");
+        res.redirect("/user/login");
     } catch (error) {
         req.flash("error", "Tạo tài khoản thất bại !");
         res.redirect("back");

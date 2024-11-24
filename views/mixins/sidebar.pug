@@ -13,6 +13,10 @@ mixin sidebar(page)
                 a(href="/users/not-friend") 
                     i(class="fas fa-user-friends")
                     | Danh sách người dùng
+            li(class= (page == "friend-invitation" ? "active" : ""))
+                a(href="/users/friend-invitation") 
+                    i(class="fas fa-user-friends")
+                    | Lời mời kết bạn
             li(class= (page == "list-friend" ? "active" : ""))
                 a(href="/user/list-friend") 
                     i(class="fas fa-users")

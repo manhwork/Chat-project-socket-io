@@ -5,4 +5,6 @@ const controller = require("../controllers/users.controller");
 
 router.get("/not-friend", controller.index);
 
+router.get("/friend-invitation", controller.invitaion);
+
 module.exports = router;

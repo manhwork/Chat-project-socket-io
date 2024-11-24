@@ -1,0 +1,36 @@
+extend ../../layout/base.pug
+include ../../mixins/sidebar.pug
+include ../../mixins/alert.pug
+
+
+block main 
+
+    link(rel="stylesheet", href="/css/infoUser.css")
+
+    +alert-success(3000)
+    +alert-error(3000)
+
+    div(class="container-fluid")
+        div(class="row")
+
+            +sidebar("friend-invitation")
+
+            div(class="col-9")
+                div(class="container friends-container")
+                    div(class="friends-header")
+                        div(class="title")
+                            | Kết Bạn Chờ Xác Nhận
+                    div(class="friends-body")
+
+                        ul(class="pending-list")
+                            each item in acceptFriendsListObj
+                                li
+                                    img(alt="Pending Friend Image", height="40", src="https://storage.googleapis.com/a1aa/image/U28v49suejUnJ6le7DnNAEcGwyrMmiRz06u2P9KY91mqXnwTA.jpg", width="40")
+                                    span
+                                        | #{item.fullNameNotFriendUser}
+                                    div(class="actions" invitation-friend-id=item.notFriendUserId)
+                                        button(class="btn btn-success btn-sm")
+                                            | Chấp Nhận
+                                        button(class="btn btn-danger btn-sm")
+                                            | Từ Chối
+                
