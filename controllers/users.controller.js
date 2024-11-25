@@ -92,8 +92,56 @@ module.exports.friendInvitation = async (req, res) => {
     _io.once("connection", (socket) => {
         console.log("User " + socket.id + " connected");
 
-        socket.on("CLIENT_ACCEPT_FRIEND", (data) => {
-            console.log(data);
+        socket.on("CLIENT_ACCEPT_FRIEND", async (data) => {
+            // Xoá id của người gửi kết bạn trong acceptFriends của curentUser
+            await User.updateOne(
+                {
+                    status: "active",
+                    _id: currentUser._id,
+                },
+                {
+                    $pull: { acceptFriends: data.userId },
+                }
+            );
+            // Xoá id của currentUser trong requestFriends của người gửi kết bạn
+            await User.updateOne(
+                {
+                    status: "active",
+                    _id: data.userId,
+                },
+                {
+                    $pull: { requestFriends: currentUser.id },
+                }
+            );
+
+            // thêm user_id và room_id vào friendlist của A và B
+            await User.updateOne(
+                {
+                    status: "active",
+                    _id: currentUser.id,
+                },
+                {
+                    $push: {
+                        friendsList: {
+                            user_id: data.userId,
+                        },
+                    },
+                }
+            );
+
+            await User.updateOne(
+                {
+                    status: "active",
+                    _id: data.userId,
+                },
+                {
+                    $push: {
+                        friendsList: {
+                            user_id: currentUser.id,
+                        },
+                    },
+                }
+            );
         });
 
         socket.on("CLIENT_REJECT_FRIEND", async (data) => {
