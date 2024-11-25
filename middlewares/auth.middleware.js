@@ -14,6 +14,7 @@ module.exports.authRequired = async (req, res, next) => {
     }
 
     res.locals.userInfo = user;
+    res.locals.friendRequestCount = user.acceptFriends.length;
 
     next();
 };

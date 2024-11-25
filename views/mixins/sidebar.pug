@@ -16,7 +16,7 @@ mixin sidebar(page)
             li(class= (page == "friend-invitation" ? "active" : ""))
                 a(href="/users/friend-invitation") 
                     i(class="fas fa-user-friends")
-                    | Lời mời kết bạn
+                    | Lời mời kết bạn (#{friendRequestCount})
             li(class= (page == "list-friend" ? "active" : ""))
                 a(href="/user/list-friend") 
                     i(class="fas fa-users")
