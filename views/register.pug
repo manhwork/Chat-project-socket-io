@@ -27,6 +27,7 @@ block main
 					method="post"
 				) 
 					input(class="form-control", name="email" placeholder="Email", type="email" required)
+					input(class="form-control", name="fullName" placeholder="FullName", type="text" minlength="6" required)
 					input(class="form-control", name="password" placeholder="Password", type="password" minlength="6" required)
 					input(class="form-control", name="confirmPassword" placeholder="Confirm Password", type="password" required minlength="6")
 					button(type="submit" class="btn btn-success w-100")

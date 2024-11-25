@@ -6,7 +6,11 @@ const userSchema = new mongoose.Schema(
         fullName: String,
         email: String,
         password: String,
-        avatar: String,
+        avatar: {
+            type: String,
+            default:
+                "https://www.shareicon.net/download/2015/10/09/653498_users.svg",
+        },
         phone: String,
         address: String,
         acceptFriends: Array,

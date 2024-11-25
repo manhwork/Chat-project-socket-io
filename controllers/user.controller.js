@@ -66,8 +66,6 @@ module.exports.registerPost = async (req, res) => {
             return;
         }
 
-        req.body.fullName = email;
-
         const user = new User(req.body);
         await user.save();
 
