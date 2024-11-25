@@ -180,6 +180,6 @@ module.exports.changePasswordPost = async (req, res) => {
 
 module.exports.getListFriend = async (req, res) => {
     res.render("../views/pages/user/listFriend.pug", {
-        pageTitle: "Danh sách người dùng",
+        pageTitle: "Danh sách bạn bè",
     });
 };

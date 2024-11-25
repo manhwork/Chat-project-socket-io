@@ -1,5 +1,5 @@
 const User = require("../models/user.model");
-
+const getInfoFriendDetailHelper = require("../helpers/getInfoFriendDetail");
 // [GET] /user/not-friend
 
 module.exports.index = async (req, res) => {
@@ -71,23 +71,20 @@ module.exports.friendInvitation = async (req, res) => {
     const currentUser = res.locals.userInfo;
 
     const pendingFriendRequests = currentUser.acceptFriends;
-    const friendDetailsList = [];
+    // cach 1 :
+    const friendDetailsList = await getInfoFriendDetailHelper(
+        pendingFriendRequests
+    );
 
-    if (pendingFriendRequests.length > 0) {
-        for (const pendingUserId of pendingFriendRequests) {
-            const pendingUser = await User.findOne({
-                status: "active",
-                _id: pendingUserId,
-            });
-
-            const pendingUserFullName = pendingUser.fullName;
-
-            friendDetailsList.push({
-                userId: pendingUserId,
-                fullName: pendingUserFullName,
-            });
-        }
-    }
+    // cach 2 :
+    // const friendDetailsList = [];
+    // getInfoFriendDetailHelper(pendingFriendRequests)
+    //     .then((data) => {
+    //         console.log(data);
+    //     })
+    //     .catch((err) => {
+    //         console.log(err);
+    //     });
 
     _io.once("connection", (socket) => {
         console.log("User " + socket.id + " connected");
