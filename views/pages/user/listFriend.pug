@@ -17,20 +17,18 @@ block main
 
             div(class="col-9")
                 div(class="container friends-container")
-                    div(class="friends-header")
-                        div(class="title")
-                            | Danh Sách Bạn Bè
-                    div(class="friends-body")
-                        ul(class="friends-list")
-                            li
-                                img(alt="Friend Image", height="40", src="https://storage.googleapis.com/a1aa/image/U28v49suejUnJ6le7DnNAEcGwyrMmiRz06u2P9KY91mqXnwTA.jpg", width="40")
-                                span
-                                    | Angee Sam
-                            li
-                                img(alt="Friend Image", height="40", src="https://storage.googleapis.com/a1aa/image/U28v49suejUnJ6le7DnNAEcGwyrMmiRz06u2P9KY91mqXnwTA.jpg", width="40")
-                                span
-                                    | Kail Matt
-                            li
-                                img(alt="Friend Image", height="40", src="https://storage.googleapis.com/a1aa/image/U28v49suejUnJ6le7DnNAEcGwyrMmiRz06u2P9KY91mqXnwTA.jpg", width="40")
-                                span
-                                    | Sumana Biswas
+                    if(friendsListInfo)
+                        div(class="friends-header")
+                            div(class="title")
+                                | Danh Sách Bạn Bè
+                        div(class="friends-body")
+                            ul(class="friends-list")
+                                each item in friendsListInfo
+                                    li
+                                        img(alt="Friend Image", height="40", src="https://storage.googleapis.com/a1aa/image/U28v49suejUnJ6le7DnNAEcGwyrMmiRz06u2P9KY91mqXnwTA.jpg", width="40")
+                                        span
+                                            | #{item.fullName}
+                    else 
+                        div(class="friends-header")
+                            div(class="title")
+                                | Mày đéo có bạn !

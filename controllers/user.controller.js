@@ -1,4 +1,5 @@
 const User = require("../models/user.model");
+const getInfoFriendDetailHelper = require("../helpers/getInfoFriendDetail");
 
 // [GET]  /user/login
 module.exports.index = async (req, res) => {
@@ -179,7 +180,34 @@ module.exports.changePasswordPost = async (req, res) => {
 // [GET] /user/list-friend
 
 module.exports.getListFriend = async (req, res) => {
+    const user = res.locals.userInfo;
+    const friendsList = user.friendsList;
+
+    async function getInfoFriend(arr) {
+        const result = [];
+        if (arr.length > 0) {
+            for (const item of arr) {
+                const user = await User.findOne({
+                    status: "active",
+                    _id: item.user_id,
+                });
+
+                if (user) {
+                    const fullName = user.fullName;
+                    result.push({
+                        userId: item.user_id,
+                        fullName: fullName,
+                    });
+                }
+            }
+            return result;
+        }
+    }
+
+    const friendsListInfo = await getInfoFriend(friendsList);
+
     res.render("../views/pages/user/listFriend.pug", {
         pageTitle: "Danh sách bạn bè",
+        friendsListInfo: friendsListInfo,
     });
 };
