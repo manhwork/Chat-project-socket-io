@@ -25,7 +25,7 @@ block main
                             ul(class="friends-list")
                                 each item in friendsListInfo
                                     li
-                                        img(alt="Friend Image", height="40", src="https://storage.googleapis.com/a1aa/image/U28v49suejUnJ6le7DnNAEcGwyrMmiRz06u2P9KY91mqXnwTA.jpg", width="40")
+                                        img(alt="Friend Image", height="40", src=item.avatar, width="40")
                                         span
                                             | #{item.fullName}
                     else 

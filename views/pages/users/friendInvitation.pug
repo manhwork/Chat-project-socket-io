@@ -29,7 +29,7 @@ block main
                         ul(class="pending-list" )
                             each item in friendRequests
                                 li(class="pending-user" invitation-friend-id=item.userId)
-                                    img(alt="Pending Friend Image", height="40", src="https://storage.googleapis.com/a1aa/image/U28v49suejUnJ6le7DnNAEcGwyrMmiRz06u2P9KY91mqXnwTA.jpg", width="40")
+                                    img(alt="Pending Friend Image", height="40", src=item.avatar, width="40")
                                     span
                                         | #{item.fullName}
                                     div(class="actions" )

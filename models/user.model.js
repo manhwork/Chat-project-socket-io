@@ -13,8 +13,8 @@ const userSchema = new mongoose.Schema(
         },
         phone: String,
         address: String,
-        acceptFriends: Array,
-        requestFriends: Array,
+        acceptFriends: Array, // danh sách người mà ta gửi yêu cầu
+        requestFriends: Array, // danh sách người mà đã gửi yêu cầu đến ta
         friendsList: [
             {
                 user_id: String,

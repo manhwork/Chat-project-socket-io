@@ -24,7 +24,7 @@ block main
                         each user in users 
                             ul(class="pending-list" not-friend-id=user.id)
                                 li
-                                    img(alt="Pending Friend Image", height="40", src="https://storage.googleapis.com/a1aa/image/U28v49suejUnJ6le7DnNAEcGwyrMmiRz06u2P9KY91mqXnwTA.jpg", width="40")
+                                    img(alt="Pending Friend Image", height="40", src=user.avatar, width="40")
                                     span
                                         | #{user.fullName}
                                     div(class="actions")
