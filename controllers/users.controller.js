@@ -5,29 +5,31 @@ const friendRequestHelper = require("../helpers/friendRequests");
 // [GET] /user/not-friend
 
 module.exports.index = async (req, res) => {
-    const userId = res.locals.userInfo.id;
-    const user = res.locals.userInfo;
-    const friendsList = user.friendsList.map((friend) => friend.user_id);
+    const myUserId = res.locals.userInfo.id;
+    const myUser = res.locals.userInfo;
+    const friendsList = myUser.friendsList.map((friend) => friend.user_id);
+
     // Lọc ra tất cả các người dùng trừ người dùng đã kết bạn
     const users = await User.find({
         status: "active",
-        _id: { $nin: [...friendsList, userId] },
+        _id: { $nin: [...friendsList, myUserId] },
     });
 
     _io.once("connection", (socket) => {
         console.log("User " + socket.id + " connected");
 
         socket.on("CLIENT_SEND_SENT_FRIEND", async (data) => {
-            await friendRequestHelper.sendFriendRequest(
-                userId,
-                data.notFriendId
-            );
+            const otherUserId = data.notFriendId;
+
+            await friendRequestHelper.sendFriendRequest(myUserId, otherUserId);
         });
 
         socket.on("CLIENT_SEND_CANCEL_SENT_FRIEND", async (data) => {
+            const otherUserId = data.notFriendId;
+
             await friendRequestHelper.removeFriendRequest(
-                userId,
-                data.notFriendId
+                myUserId,
+                otherUserId
             );
         });
     });
@@ -40,9 +42,9 @@ module.exports.index = async (req, res) => {
 
 // [GET] /users/friend-invitation
 module.exports.friendInvitation = async (req, res) => {
-    const currentUser = res.locals.userInfo;
+    const myUser = res.locals.userInfo;
 
-    const pendingFriendRequests = currentUser.acceptFriends;
+    const pendingFriendRequests = myUser.acceptFriends;
 
     // cach 1 :
     const friendDetailsList = await getInfoFriendDetailHelper(
@@ -63,23 +65,27 @@ module.exports.friendInvitation = async (req, res) => {
         console.log("User " + socket.id + " connected");
 
         socket.on("CLIENT_ACCEPT_FRIEND", async (data) => {
+            const otherUserId = data.userId;
+
             // Xoá lời mời kết bạn
             await friendRequestHelper.rejectFriendRequest(
-                currentUser.id,
-                data.userId
+                myUser.id,
+                otherUserId
             );
 
             // thêm vào danh sách bạn bè
             await friendRequestHelper.acceptFriendRequest(
-                currentUser.id,
-                data.userId
+                myUser.id,
+                otherUserId
             );
         });
 
         socket.on("CLIENT_REJECT_FRIEND", async (data) => {
+            const otherUserId = data.userId;
+
             await friendRequestHelper.rejectFriendRequest(
-                currentUser.id,
-                data.userId
+                myUser.id,
+                otherUserId
             );
         });
     });
