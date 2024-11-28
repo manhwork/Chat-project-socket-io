@@ -19,7 +19,7 @@ block main
                 div(class="container profile-container")
                     div(class="profile-header")
                         img(class="user-img" alt="User Image", height="80", src=userInfo.avatar, width="80")
-                        form(action="/user/avatar/upload", method="post" enctype="multipart/form-data") 
+                        form(action="/user/avatar/upload", upload-avatar  method="post" enctype="multipart/form-data") 
                             input(type="file", name="avatar" class="file-input" accept="image/*")
                         div
                             div(class="name")

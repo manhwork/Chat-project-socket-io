@@ -1,5 +1,4 @@
 const User = require("../models/user.model");
-const getInfoFriendDetailHelper = require("../helpers/getInfoFriendDetail");
 
 // [GET]  /user/login
 module.exports.index = async (req, res) => {
@@ -192,9 +191,11 @@ module.exports.getListFriend = async (req, res) => {
 
                 if (user) {
                     const fullName = user.fullName;
+                    const avatar = user.avatar;
                     result.push({
                         userId: item.user_id,
                         fullName: fullName,
+                        avatar: avatar,
                     });
                 }
             }
@@ -208,4 +209,35 @@ module.exports.getListFriend = async (req, res) => {
         pageTitle: "Danh sách bạn bè",
         friendsListInfo: friendsListInfo,
     });
+};
+
+//  [GET] /user/avatar/upload
+
+module.exports.uploadAvatar = async (req, res) => {
+    try {
+        const myUserId = res.locals.userInfo.id;
+        const originalFolder = "/uploads/";
+
+        const filename = req.file.filename;
+
+        const path = originalFolder + filename;
+
+        // console.log(req.body.avatar);
+        // console.log(req.file);
+
+        await User.updateOne(
+            {
+                _id: myUserId,
+                status: "active",
+            },
+            {
+                avatar: req.body.avatar,
+            }
+        );
+        req.flash("success", "Cập nhật avatar thành công !");
+        res.redirect("/user/info");
+    } catch (error) {
+        req.flash("error", "Cập nhật avatar thất bại !");
+        res.redirect("/user/info");
+    }
 };

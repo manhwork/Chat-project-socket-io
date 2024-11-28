@@ -85,10 +85,14 @@ if (infoUserDropdown) {
 // upload avatar
 const profileHeader = document.querySelector(".profile-header");
 if (profileHeader) {
+    const uploadAvatarForm = document.querySelector("[upload-avatar]");
     const userImage = document.querySelector(".user-img");
     userImage.addEventListener("click", (e) => {
         const fileInput = document.querySelector(".file-input");
         fileInput.click();
+        uploadAvatarForm.addEventListener("change", (e) => {
+            uploadAvatarForm.submit();
+        });
     });
 }
 // end upload avatar

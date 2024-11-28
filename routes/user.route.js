@@ -3,7 +3,13 @@ const router = express.Router();
 const controller = require("../controllers/user.controller");
 const userValidate = require("../validates/user.validate");
 
+const multer = require("multer");
+
+const upload = multer();
+
 const authRequiredMiddleware = require("../middlewares/auth.middleware");
+
+const uploadCloudinaryMiddleware = require("../middlewares/uploadCloudinary.middleware");
 
 router.get("/login", controller.index);
 
@@ -35,6 +41,14 @@ router.get(
     "/list-friend",
     authRequiredMiddleware.authRequired,
     controller.getListFriend
+);
+
+router.post(
+    "/avatar/upload",
+    authRequiredMiddleware.authRequired,
+    upload.single("avatar"),
+    uploadCloudinaryMiddleware.Upload,
+    controller.uploadAvatar
 );
 
 module.exports = router;
