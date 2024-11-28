@@ -32,8 +32,18 @@ module.exports.Upload = async (req, res, next) => {
 
         const result = await streamUpload(req);
 
+        // Tạo url với ảnh được tối ưu hóa
+        const imageUrl = cloudinary.url(result.public_id, {
+            transformation: [
+                { width: 1000, crop: "scale" },
+                { quality: "auto" },
+                { fetch_format: "auto" },
+            ],
+        });
+
         // thêm trường của ảnh vào req.body
-        req.body[req.file.fieldname] = result.url;
+        req.body[req.file.fieldname] = imageUrl;
+        console.log(imageUrl);
 
         // console.log(result);
         next();
