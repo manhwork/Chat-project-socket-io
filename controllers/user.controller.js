@@ -1,4 +1,5 @@
 const User = require("../models/user.model");
+const md5 = require("md5");
 
 // [GET]  /user/login
 module.exports.index = async (req, res) => {
@@ -65,7 +66,11 @@ module.exports.registerPost = async (req, res) => {
             return;
         }
 
+        // Mã hóa password md5
+        req.body.password = md5(req.body.password);
+
         const user = new User(req.body);
+
         await user.save();
 
         req.flash(
@@ -141,7 +146,11 @@ module.exports.changePassword = async (req, res) => {
 
 module.exports.changePasswordPost = async (req, res) => {
     const user = res.locals.userInfo;
-    const { oldPassword, newPassword, confirmPassword } = req.body;
+    let { oldPassword, newPassword, confirmPassword } = req.body;
+
+    oldPassword = md5(oldPassword);
+    newPassword = md5(newPassword);
+    confirmPassword = md5(confirmPassword);
 
     if (oldPassword !== user.password) {
         req.flash("error", "Mật khẩu cũ không chính xác !");
