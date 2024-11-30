@@ -29,13 +29,16 @@ module.exports.index = async (req, res) => {
     const chats = await Chat.find({
         status: "sent",
     });
-
-    for (const chat of chats) {
-        const infoUser = await User.findOne({
-            _id: chat.user_id,
-            status: "active",
-        });
-        chat.fullName = infoUser.fullName;
+    if (chats) {
+        for (const chat of chats) {
+            const infoUser = await User.findOne({
+                _id: chat.user_id,
+                status: "active",
+            });
+            if (infoUser) {
+                chat.fullName = infoUser.fullName;
+            }
+        }
     }
 
     res.render("../views/pages/chat/index.pug", {
