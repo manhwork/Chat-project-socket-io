@@ -42,7 +42,7 @@ module.exports.index = async (req, res) => {
     }
 
     res.render("../views/pages/chat/index.pug", {
-        pageTitle: "Chats",
+        pageTitle: "Tin nhắn",
         chats: chats,
     });
 };

@@ -12,17 +12,15 @@ block main
 			div(class="image-section")
 				img(alt="A bowl of pasta with cherry tomatoes and greens", height="600", src="https://storage.googleapis.com/a1aa/image/YAoY1hlUOb7KDFzb2XF4fxCvGfytUIzkFvrDgDkttG2JzhwTA.jpg", style="width: 100%; height: 100%; object-fit: cover;", width="400")
 			div(class="form-section")
-				span(class="close-btn")
-					| ×
 				div(class="d-flex justify-content-evenly mb-4")
 					a(href="/user/login"  class="btn btn-outline-success")
-						| Login
+						| Đăng nhập
 					a(href="/user/register" class="btn btn-outline-secondary")
-						| Register
+						| Đăng kí
 				h2
 					| Welcome
 				p
-					| Please login to your account
+					| Vui lòng đăng kí tài khoản
 				form(
 					action="/user/login" 
 					method="post"
@@ -30,11 +28,11 @@ block main
 					input(class="form-control", name="email" placeholder="Email", type="email" minlength="6" required)
 					input(class="form-control", name="password" placeholder="Password", type="password" minlength="6" required)
 					button(type="submit" class="btn btn-success w-100")
-						| Login
+						| Đăng nhập
 				a(class="forgot-password", href="/user/forgot")
-					| Forgot Password
+					| Quên mật khẩu
 				a(class="social-login mt-3", href="#")
 					i(class="fab fa-facebook-f")
-					| login with facebook
+					| Đăng nhập bằng facebook
 				p(class="terms")
-					| Terms and Conditions &amp;amp; Privacy Policy
+					| Điều khoản và điều kiện & chính sách bảo mật

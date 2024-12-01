@@ -23,6 +23,7 @@ module.exports.index = async (req, res) => {
 
             await friendRequestHelper.sendFriendRequest(myUserId, otherUserId);
 
+            // Lấy ra số lượng người gửi kết bạn
             const otherUser = await User.findOne({
                 status: "active",
                 _id: otherUserId,
@@ -44,6 +45,7 @@ module.exports.index = async (req, res) => {
                 otherUserId
             );
 
+            // Lấy ra số lượng người gửi kết bạn
             const otherUser = await User.findOne({
                 status: "active",
                 _id: otherUserId,
@@ -67,6 +69,7 @@ module.exports.index = async (req, res) => {
 // [GET] /users/friend-invitation
 module.exports.friendInvitation = async (req, res) => {
     const myUser = res.locals.userInfo;
+    const myUserId = myUser.id;
 
     const pendingFriendRequests = myUser.acceptFriends;
 
@@ -102,6 +105,20 @@ module.exports.friendInvitation = async (req, res) => {
                 myUser.id,
                 otherUserId
             );
+
+            // Lấy ra số lượng người gửi kết bạn
+            const myUpdatedUser = await User.findOne({
+                status: "active",
+                _id: myUserId,
+            });
+
+            const friendRequestCount = myUpdatedUser.acceptFriends.length;
+            console.log(friendRequestCount);
+
+            socket.emit("SERVER_SEND_NUMBER_REQ_FRIEND", {
+                user_id: myUserId,
+                friendRequestCount: friendRequestCount,
+            });
         });
 
         socket.on("CLIENT_REJECT_FRIEND", async (data) => {
@@ -111,11 +128,25 @@ module.exports.friendInvitation = async (req, res) => {
                 myUser.id,
                 otherUserId
             );
+
+            // Lấy ra số lượng người gửi kết bạn
+
+            const myUpdatedUser = await User.findOne({
+                status: "active",
+                _id: myUserId,
+            });
+
+            const friendRequestCount = myUpdatedUser.acceptFriends.length;
+
+            socket.emit("SERVER_SEND_NUMBER_REQ_FRIEND", {
+                user_id: myUserId,
+                friendRequestCount: friendRequestCount,
+            });
         });
     });
 
     res.render("../views/pages/users/friendInvitation.pug", {
-        pageTitle: "Friend Invitation",
+        pageTitle: "Danh sách lời mời kết bạn",
         friendRequests: friendDetailsList,
     });
 };

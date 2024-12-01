@@ -4,7 +4,7 @@ const md5 = require("md5");
 // [GET]  /user/login
 module.exports.index = async (req, res) => {
     res.render("../views/login.pug", {
-        pageTitle: "Login",
+        pageTitle: "Đăng nhập",
     });
 };
 
@@ -40,7 +40,7 @@ module.exports.loginPost = async (req, res) => {
 
 module.exports.register = async (req, res) => {
     res.render("../views/register.pug", {
-        pageTitle: "Register",
+        pageTitle: "Đăng kí",
     });
 };
 
@@ -96,7 +96,7 @@ module.exports.logout = async (req, res) => {
 
 module.exports.getInfo = async (req, res) => {
     res.render("../views/pages/user/info.pug", {
-        pageTitle: "InfoUser",
+        pageTitle: "Thông tin người dùng",
     });
 };
 
@@ -138,7 +138,7 @@ module.exports.postInfo = async (req, res) => {
 
 module.exports.changePassword = async (req, res) => {
     res.render("../views/pages/user/changpassword", {
-        pageTitle: "ChangePassword",
+        pageTitle: "Thay đổi mật khẩu",
     });
 };
 
@@ -230,9 +230,6 @@ module.exports.uploadAvatar = async (req, res) => {
         const filename = req.file.filename;
 
         const path = originalFolder + filename;
-
-        // console.log(req.body.avatar);
-        // console.log(req.file);
 
         await User.updateOne(
             {
