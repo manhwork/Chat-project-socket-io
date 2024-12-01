@@ -22,6 +22,18 @@ module.exports.index = async (req, res) => {
             const otherUserId = data.notFriendId;
 
             await friendRequestHelper.sendFriendRequest(myUserId, otherUserId);
+
+            const otherUser = await User.findOne({
+                status: "active",
+                _id: otherUserId,
+            });
+
+            const friendRequestCount = otherUser.acceptFriends.length;
+
+            socket.broadcast.emit("SERVER_SEND_NUMBER_REQ_FRIEND", {
+                user_id: otherUserId,
+                friendRequestCount: friendRequestCount,
+            });
         });
 
         socket.on("CLIENT_SEND_CANCEL_SENT_FRIEND", async (data) => {
@@ -31,6 +43,18 @@ module.exports.index = async (req, res) => {
                 myUserId,
                 otherUserId
             );
+
+            const otherUser = await User.findOne({
+                status: "active",
+                _id: otherUserId,
+            });
+
+            const friendRequestCount = otherUser.acceptFriends.length;
+
+            socket.broadcast.emit("SERVER_SEND_NUMBER_REQ_FRIEND", {
+                user_id: otherUserId,
+                friendRequestCount: friendRequestCount,
+            });
         });
     });
 

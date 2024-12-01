@@ -155,3 +155,21 @@ if (pendingUsers) {
     });
 }
 // End accept-friend cancel-friend
+
+// Hiển thị thông báo số lượng người gửi kết bạn
+const friendRequestCountElement = document.querySelector(
+    `[friend-request-count-element]`
+);
+
+if (friendRequestCountElement) {
+    socket.on("SERVER_SEND_NUMBER_REQ_FRIEND", (data) => {
+        const myUserId = document
+            .querySelector(`[my-user-id]`)
+            .getAttribute("my-user-id");
+
+        if (myUserId === data.user_id) {
+            friendRequestCountElement.innerHTML = `Lời mời kết bạn (${data.friendRequestCount})`;
+        }
+    });
+}
+// End  Hiển thị thông báo số lượng người gửi kết bạn

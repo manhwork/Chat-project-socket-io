@@ -12,9 +12,11 @@ module.exports = async (arr) => {
 
             if (user) {
                 const fullName = user.fullName;
+                const avatar = user.avatar;
                 result.push({
                     userId: user_id,
                     fullName: fullName,
+                    avatar: avatar,
                 });
             }
         }
