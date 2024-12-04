@@ -195,34 +195,36 @@ module.exports.getListFriend = async (req, res) => {
         console.log("User " + socket.id + " connected");
 
         socket.on("CLIENT_SEND_CANCEL_FRIEND_IN_LIST", async (data) => {
-            // Lấy userId trong listfriend của cả 2 người
-            await User.updateOne(
-                {
-                    status: "active",
-                    _id: myUser.id,
-                },
-                {
-                    $pull: {
-                        friendsList: {
-                            user_id: data.userId,
-                        },
+            // Lấy đồng thời userId trong listfriend của cả 2 người
+            await Promise.all([
+                User.updateOne(
+                    {
+                        status: "active",
+                        _id: myUser.id,
                     },
-                }
-            );
+                    {
+                        $pull: {
+                            friendsList: {
+                                user_id: data.userId,
+                            },
+                        },
+                    }
+                ),
 
-            await User.updateOne(
-                {
-                    status: "active",
-                    _id: data.userId,
-                },
-                {
-                    $pull: {
-                        friendsList: {
-                            user_id: myUser.id,
-                        },
+                User.updateOne(
+                    {
+                        status: "active",
+                        _id: data.userId,
                     },
-                }
-            );
+                    {
+                        $pull: {
+                            friendsList: {
+                                user_id: myUser.id,
+                            },
+                        },
+                    }
+                ),
+            ]);
         });
     });
 
@@ -260,4 +262,9 @@ module.exports.uploadAvatar = async (req, res) => {
         req.flash("error", "Cập nhật avatar thất bại !");
         res.redirect("/user/info");
     }
+};
+
+// [GET] /user/forgot
+module.exports.forgot = async (req, res) => {
+    res.render("../views/pages/user/forgot.pug");
 };

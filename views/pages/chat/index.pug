@@ -1,8 +1,14 @@
 extends ../../layout/base.pug
+include ../../mixins/alert.pug
+
+
 
 block main 
 
     link(rel="stylesheet", href="/css/chat.css")
+    +alert-success(3000)
+
+    +alert-error(3000)
 
     div(class="d-flex")
         div(class="sidebar")

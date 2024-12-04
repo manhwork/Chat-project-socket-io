@@ -2,163 +2,104 @@ const User = require("../models/user.model");
 
 // Gửi yêu cầu kết bạn
 module.exports.sendFriendRequest = async (myUserId, otherUserId) => {
-    // thêm id của B vào requestFriends của A tức danh sách gửi lời mời kết bạn A có B
-    const existUserBinA = await User.findOne({
-        _id: myUserId,
-        requestFriends: otherUserId,
-    });
+    // Kiểm tra xem lời mời kết bạn đã tồn tại hay chưa
+    const [myUser, otherUser] = await Promise.all([
+        // Kiểm tra xem user A đã gửi lời mời kết bạn tới user B chưa
+        User.findOne({ _id: myUserId, requestFriends: otherUserId }),
+        // Kiểm tra xem user B đã chấp nhận lời mời kết bạn của user A chưa
+        User.findOne({ _id: otherUserId, acceptFriends: myUserId }),
+    ]);
 
-    if (!existUserBinA) {
-        await User.updateOne(
-            {
-                _id: myUserId,
-                status: "active",
-            },
-            {
-                $push: { requestFriends: otherUserId },
-            }
-        );
-    }
-    // thêm id của A vào acceptFriends của B tức là danh sách chờ xác nhận kết bạn của B có A
-    const existUserAinB = await User.findOne({
-        _id: otherUserId,
-        acceptFriends: myUserId,
-    });
-
-    if (!existUserAinB) {
-        await User.updateOne(
-            {
-                _id: otherUserId,
-                status: "active",
-            },
-            {
-                $push: { acceptFriends: myUserId },
-            }
-        );
+    if (!myUser && !otherUser) {
+        // Thêm id của user B vào danh sách lời mời kết bạn của user A
+        // Thêm id của user A vào danh sách chấp nhận kết bạn của user B
+        await Promise.all([
+            User.updateOne(
+                { _id: myUserId, status: "active" },
+                { $push: { requestFriends: otherUserId } }
+            ),
+            User.updateOne(
+                { _id: otherUserId, status: "active" },
+                { $push: { acceptFriends: myUserId } }
+            ),
+        ]);
     }
 };
 
 // Huỷ yêu cầu kết bạn đã gửi
 module.exports.removeFriendRequest = async (myUserId, otherUserId) => {
-    // xoa id của B vào requestFriends của A tức danh sách gửi lời mời kết bạn A có B
-    const existUserBinA = await User.findOne({
-        _id: myUserId,
-        requestFriends: otherUserId,
-    });
+    // Kiểm tra xem lời mời kết bạn đã tồn tại hay chưa
+    const [myUser, otherUser] = await Promise.all([
+        // Kiểm tra xem user A đã gửi lời mời kết bạn tới user B chưa
+        User.findOne({ _id: myUserId, requestFriends: otherUserId }),
+        // Kiểm tra xem user B đã chấp nhận lời mời kết bạn của user A chưa
+        User.findOne({ _id: otherUserId, acceptFriends: myUserId }),
+    ]);
 
-    if (existUserBinA) {
-        await User.updateOne(
-            {
-                _id: myUserId,
-                status: "active",
-            },
-            {
-                $pull: { requestFriends: otherUserId },
-            }
-        );
-    }
-    // xoa id của A vào acceptFriends của B tức là danh sách chờ xác nhận kết bạn của B có A
-    const existUserAinB = await User.findOne({
-        _id: otherUserId,
-        acceptFriends: myUserId,
-    });
-
-    if (existUserAinB) {
-        await User.updateOne(
-            {
-                _id: otherUserId,
-                status: "active",
-            },
-            {
-                $pull: { acceptFriends: myUserId },
-            }
-        );
+    if (myUser && otherUser) {
+        // Xoá id của user B khỏi danh sách lời mời kết bạn của user A
+        // Xoá id của user A khỏi danh sách chấp nhận kết bạn của user B
+        await Promise.all([
+            User.updateOne(
+                { _id: myUserId, status: "active" },
+                { $pull: { requestFriends: otherUserId } }
+            ),
+            User.updateOne(
+                { _id: otherUserId, status: "active" },
+                { $pull: { acceptFriends: myUserId } }
+            ),
+        ]);
     }
 };
 
-// Từ chối yêu cầu kết bạn (Xoá yêu cầu kết bạn )
+// Từ chối yêu cầu kết bạn
 module.exports.rejectFriendRequest = async (myUserId, otherUserId) => {
-    // Xoá id của currentUser trong requestFriends của người gửi kết bạn
-    const existUserBinA = await User.findOne({
-        _id: otherUserId,
-        requestFriends: myUserId,
-    });
+    // Kiểm tra xem lời mời kết bạn đã tồn tại hay chưa
+    const [myUser, otherUser] = await Promise.all([
+        // Kiểm tra xem user B đã gửi lời mời kết bạn tới user A chưa
+        User.findOne({ _id: otherUserId, requestFriends: myUserId }),
+        // Kiểm tra xem user A đã chấp nhận lời mời kết bạn của user B chưa
+        User.findOne({ _id: myUserId, acceptFriends: otherUserId }),
+    ]);
 
-    if (existUserBinA) {
-        await User.updateOne(
-            {
-                status: "active",
-                _id: otherUserId,
-            },
-            {
-                $pull: { requestFriends: myUserId },
-            }
-        );
-    }
-    // Xoá id của người gửi kết bạn trong acceptFriends của curentUser
-    const existUserAinB = await User.findOne({
-        _id: myUserId,
-        acceptFriends: otherUserId,
-    });
-
-    if (existUserAinB) {
-        await User.updateOne(
-            {
-                status: "active",
-                _id: myUserId,
-            },
-            {
-                $pull: { acceptFriends: otherUserId },
-            }
-        );
+    if (myUser && otherUser) {
+        // Xoá id của user A khỏi danh sách lời mời kết bạn của user B
+        // Xoá id của user B khỏi danh sách chấp nhận kết bạn của user A
+        await Promise.all([
+            User.updateOne(
+                { _id: otherUserId, status: "active" },
+                { $pull: { requestFriends: myUserId } }
+            ),
+            User.updateOne(
+                { _id: myUserId, status: "active" },
+                { $pull: { acceptFriends: otherUserId } }
+            ),
+        ]);
     }
 };
 
 // Chấp nhận yêu cầu kết bạn
 module.exports.acceptFriendRequest = async (myUserId, otherUserId) => {
-    // thêm user_id và room_id vào friendlist của A và B
-    const existUserBinA = await User.findOne({
-        _id: myUserId,
-        "friendsList.user_id": otherUserId,
-    });
+    // Kiểm tra xem hai người dùng đã là bạn bè hay chưa
+    const [myUser, otherUser] = await Promise.all([
+        // Kiểm tra danh sách bạn bè của user A xem có user B chưa
+        User.findOne({ _id: myUserId, "friendsList.user_id": otherUserId }),
+        // Kiểm tra danh sách bạn bè của user B xem có user A chưa
+        User.findOne({ _id: otherUserId, "friendsList.user_id": myUserId }),
+    ]);
 
-    // console.log(otherUserId);
-    // console.log(myUserId);
-
-    if (!existUserBinA) {
-        await User.updateOne(
-            {
-                status: "active",
-                _id: myUserId,
-            },
-            {
-                $push: {
-                    friendsList: {
-                        user_id: otherUserId,
-                    },
-                },
-            }
-        );
-    }
-
-    const existUserAinB = await User.findOne({
-        _id: otherUserId,
-        "friendsList.user_id": myUserId,
-    });
-
-    if (!existUserAinB) {
-        await User.updateOne(
-            {
-                status: "active",
-                _id: otherUserId,
-            },
-            {
-                $push: {
-                    friendsList: {
-                        user_id: myUserId,
-                    },
-                },
-            }
-        );
+    if (!myUser && !otherUser) {
+        // Thêm id của user B vào danh sách bạn bè của user A
+        // Thêm id của user A vào danh sách bạn bè của user B
+        await Promise.all([
+            User.updateOne(
+                { _id: myUserId, status: "active" },
+                { $push: { friendsList: { user_id: otherUserId } } }
+            ),
+            User.updateOne(
+                { _id: otherUserId, status: "active" },
+                { $push: { friendsList: { user_id: myUserId } } }
+            ),
+        ]);
     }
 };

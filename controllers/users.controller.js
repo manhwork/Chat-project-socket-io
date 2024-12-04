@@ -94,17 +94,12 @@ module.exports.friendInvitation = async (req, res) => {
         socket.on("CLIENT_ACCEPT_FRIEND", async (data) => {
             const otherUserId = data.userId;
 
-            // Xoá lời mời kết bạn
-            await friendRequestHelper.rejectFriendRequest(
-                myUser.id,
-                otherUserId
-            );
-
-            // thêm vào danh sách bạn bè
-            await friendRequestHelper.acceptFriendRequest(
-                myUser.id,
-                otherUserId
-            );
+            await Promise.all([
+                // Xoá lời mời kết bạn
+                friendRequestHelper.rejectFriendRequest(myUser.id, otherUserId),
+                // thêm vào danh sách bạn bè
+                friendRequestHelper.acceptFriendRequest(myUser.id, otherUserId),
+            ]);
 
             // Lấy ra số lượng người gửi kết bạn
             const myUpdatedUser = await User.findOne({
@@ -113,7 +108,6 @@ module.exports.friendInvitation = async (req, res) => {
             });
 
             const friendRequestCount = myUpdatedUser.acceptFriends.length;
-            console.log(friendRequestCount);
 
             socket.emit("SERVER_SEND_NUMBER_REQ_FRIEND", {
                 user_id: myUserId,
