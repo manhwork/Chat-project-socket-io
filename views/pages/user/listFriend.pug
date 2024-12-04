@@ -24,10 +24,12 @@ block main
                         div(class="friends-body")
                             ul(class="friends-list")
                                 each item in friendsListInfo
-                                    li
-                                        img(alt="Friend Image", height="40", src=item.avatar, width="40")
-                                        span
-                                            | #{item.fullName}
+                                    li(li-cancel-friend-in-list)
+                                        div 
+                                            img(alt="Friend Image", height="40", src=item.avatar, width="40")
+                                            span
+                                                | #{item.fullName}
+                                        button(class="btn btn-danger .btn-cancel-friend-in-list" button-cancel-friend-in-list=item.userId) Hủy kết bạn
                     else 
                         div(class="friends-header")
                             div(class="title")

@@ -1,6 +1,8 @@
 const User = require("../models/user.model");
 const md5 = require("md5");
 
+const getInfoFriendHelper = require("../helpers/getInfoFriend");
+
 // [GET]  /user/login
 module.exports.index = async (req, res) => {
     res.render("../views/login.pug", {
@@ -186,33 +188,45 @@ module.exports.changePasswordPost = async (req, res) => {
 // [GET] /user/list-friend
 
 module.exports.getListFriend = async (req, res) => {
-    const user = res.locals.userInfo;
-    const friendsList = user.friendsList;
+    const myUser = res.locals.userInfo;
+    const friendsList = myUser.friendsList;
 
-    async function getInfoFriend(arr) {
-        const result = [];
-        if (arr.length > 0) {
-            for (const item of arr) {
-                const user = await User.findOne({
+    _io.once("connection", (socket) => {
+        console.log("User " + socket.id + " connected");
+
+        socket.on("CLIENT_SEND_CANCEL_FRIEND_IN_LIST", async (data) => {
+            // Lấy userId trong listfriend của cả 2 người
+            await User.updateOne(
+                {
                     status: "active",
-                    _id: item.user_id,
-                });
-
-                if (user) {
-                    const fullName = user.fullName;
-                    const avatar = user.avatar;
-                    result.push({
-                        userId: item.user_id,
-                        fullName: fullName,
-                        avatar: avatar,
-                    });
+                    _id: myUser.id,
+                },
+                {
+                    $pull: {
+                        friendsList: {
+                            user_id: data.userId,
+                        },
+                    },
                 }
-            }
-            return result;
-        }
-    }
+            );
 
-    const friendsListInfo = await getInfoFriend(friendsList);
+            await User.updateOne(
+                {
+                    status: "active",
+                    _id: data.userId,
+                },
+                {
+                    $pull: {
+                        friendsList: {
+                            user_id: myUser.id,
+                        },
+                    },
+                }
+            );
+        });
+    });
+
+    const friendsListInfo = await getInfoFriendHelper(friendsList);
 
     res.render("../views/pages/user/listFriend.pug", {
         pageTitle: "Danh sách bạn bè",

@@ -116,6 +116,7 @@ body {
     border-radius: 10px;
     margin-bottom: 10px;
     background-color: #f5f5f5;
+    justify-content: space-between;
 }
 
 .friends-list li img,

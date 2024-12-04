@@ -173,3 +173,27 @@ if (friendRequestCountElement) {
     });
 }
 // End  Hiển thị thông báo số lượng người gửi kết bạn
+
+// Hủy kết bạn
+const buttonCancelFriendInList = document.querySelector(
+    "[button-cancel-friend-in-list]"
+);
+
+if (buttonCancelFriendInList) {
+    buttonCancelFriendInList.addEventListener("click", (e) => {
+        const userId = buttonCancelFriendInList.getAttribute(
+            "button-cancel-friend-in-list"
+        );
+
+        socket.emit("CLIENT_SEND_CANCEL_FRIEND_IN_LIST", {
+            userId,
+        });
+
+        const liCancelFriendInList = document.querySelector(
+            `[li-cancel-friend-in-list]`
+        );
+
+        liCancelFriendInList.remove();
+    });
+}
+// Hủy kết bạn
