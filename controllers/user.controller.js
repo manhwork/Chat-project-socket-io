@@ -333,7 +333,44 @@ module.exports.sendOTPPost = async (req, res) => {
         return;
     }
 
+    const user = await User.findOne({
+        email: email,
+        status: "active",
+    });
+
+    res.cookie("tokenUser", user.token);
+
     req.flash("success", "Mã OTP hợp lệ !");
 
     res.redirect("/user/forgot/change/password");
+};
+
+// [GET] /user/forgot/change/password
+module.exports.changePass = async (req, res) => {
+    res.render("../views/pages/user/changepass.pug");
+};
+
+// [POST] /user/forgot/change/password
+module.exports.changePassPost = async (req, res) => {
+    const newPassword = req.body.newpass;
+    const confirmPassword = req.body.confirmpass;
+    const tokenUser = req.cookies.tokenUser;
+
+    if (newPassword !== confirmPassword) {
+        req.flash("error", "Mật khẩu không trùng khớp !");
+        res.redirect("back");
+        return;
+    }
+
+    await User.updateOne(
+        {
+            token: tokenUser,
+        },
+        {
+            password: md5(newPassword),
+        }
+    );
+
+    req.flash("success", "Đổi mẩt khẩu thành công !");
+    res.redirect("/chats");
 };

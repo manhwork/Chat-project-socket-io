@@ -59,4 +59,8 @@ router.get("/forgot/sendOTP", controller.sendOTP);
 
 router.post("/forgot/sendOTP", controller.sendOTPPost);
 
+router.get("/forgot/change/password", controller.changePass);
+
+router.post("/forgot/change/password", controller.changePassPost);
+
 module.exports = router;
