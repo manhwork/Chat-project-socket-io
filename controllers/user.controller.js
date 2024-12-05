@@ -4,6 +4,7 @@ const Otp = require("../models/otp.model");
 
 const getInfoFriendHelper = require("../helpers/getInfoFriend");
 const generateRandomHelper = require("../helpers/generateRandom");
+const sendOTPHelper = require("../helpers/sendOTP");
 
 // [GET]  /user/login
 module.exports.index = async (req, res) => {
@@ -274,6 +275,7 @@ module.exports.forgot = async (req, res) => {
 // [POST] /user/forgot
 module.exports.forgotPost = async (req, res) => {
     const email = req.body.email;
+    const otp = generateRandomHelper.generateRandomNumber(6);
 
     const existUser = await User.findOne({
         status: "active",
@@ -288,12 +290,19 @@ module.exports.forgotPost = async (req, res) => {
 
     const otpObject = {
         email: email,
-        otp: generateRandomHelper.generateRandomNumber(6),
+        otp: otp,
         expireAt: new Date(Date.now() + 3 * 60 * 1000), // hạn là 3 phút
     };
 
     const otpModel = new Otp(otpObject);
     await otpModel.save();
+
+    // Mailer gửi otp đến gmail
+    const nodemailer = require("nodemailer");
+
+    // Tạo transporter sử dụng dịch vụ Gmail
+    sendOTPHelper(email, otp);
+    // End Mailer gửi otp đến gmail
 
     res.cookie("email", email);
     req.flash(
