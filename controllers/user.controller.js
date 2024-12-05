@@ -74,6 +74,8 @@ module.exports.registerPost = async (req, res) => {
         // Mã hóa password md5
         req.body.password = md5(req.body.password);
 
+        req.body.token = generateRandomHelper.generateRandomString(20);
+
         const user = new User(req.body);
 
         await user.save();
@@ -269,7 +271,9 @@ module.exports.uploadAvatar = async (req, res) => {
 
 // [GET] /user/forgot
 module.exports.forgot = async (req, res) => {
-    res.render("../views/pages/user/forgot.pug");
+    res.render("../views/pages/user/forgot.pug", {
+        pageTitle: "Quên mật khẩu",
+    });
 };
 
 // [POST] /user/forgot
@@ -315,7 +319,9 @@ module.exports.forgotPost = async (req, res) => {
 
 // [GET] /user/forgot/sendOTP
 module.exports.sendOTP = async (req, res) => {
-    res.render("../views/pages/user/sendOTP.pug");
+    res.render("../views/pages/user/sendOTP.pug", {
+        pageTitle: "Xác minh OTP",
+    });
 };
 
 // [POST] /user/forgot/sendOTP
@@ -347,7 +353,9 @@ module.exports.sendOTPPost = async (req, res) => {
 
 // [GET] /user/forgot/change/password
 module.exports.changePass = async (req, res) => {
-    res.render("../views/pages/user/changepass.pug");
+    res.render("../views/pages/user/changepass.pug", {
+        pageTitle: "Đổi mật khẩu",
+    });
 };
 
 // [POST] /user/forgot/change/password
