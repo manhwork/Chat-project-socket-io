@@ -1,7 +1,9 @@
 const User = require("../models/user.model");
 const md5 = require("md5");
+const Otp = require("../models/otp.model");
 
 const getInfoFriendHelper = require("../helpers/getInfoFriend");
+const generateRandomHelper = require("../helpers/generateRandom");
 
 // [GET]  /user/login
 module.exports.index = async (req, res) => {
@@ -267,4 +269,62 @@ module.exports.uploadAvatar = async (req, res) => {
 // [GET] /user/forgot
 module.exports.forgot = async (req, res) => {
     res.render("../views/pages/user/forgot.pug");
+};
+
+// [POST] /user/forgot
+module.exports.forgotPost = async (req, res) => {
+    const email = req.body.email;
+
+    const existUser = await User.findOne({
+        status: "active",
+        email: email,
+    });
+
+    if (!existUser) {
+        req.flash("error", "Email không tồn tại !");
+        res.redirect("/user/forgot");
+        return;
+    }
+
+    const otpObject = {
+        email: email,
+        otp: generateRandomHelper.generateRandomNumber(6),
+        expireAt: new Date(Date.now() + 3 * 60 * 1000), // hạn là 3 phút
+    };
+
+    const otpModel = new Otp(otpObject);
+    await otpModel.save();
+
+    res.cookie("email", email);
+    req.flash(
+        "success",
+        "Mã OTP đã được gửi về email của bạn vui lòng kiểm tra trong hộp thư !"
+    );
+
+    res.redirect("/user/forgot/sendOTP");
+};
+
+// [GET] /user/forgot/sendOTP
+module.exports.sendOTP = async (req, res) => {
+    res.render("../views/pages/user/sendOTP.pug");
+};
+
+// [POST] /user/forgot/sendOTP
+module.exports.sendOTPPost = async (req, res) => {
+    const email = req.cookies.email;
+    const otp = req.body.otp;
+    const existOTP = await Otp.findOne({
+        email: email,
+        otp: otp,
+    });
+
+    if (!existOTP) {
+        req.flash("error", "Mã OTP không chính xác !");
+        res.redirect("/user/forgot/sendOTP");
+        return;
+    }
+
+    req.flash("success", "Mã OTP hợp lệ !");
+
+    res.redirect("/user/forgot/change/password");
 };

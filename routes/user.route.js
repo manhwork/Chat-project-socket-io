@@ -51,4 +51,12 @@ router.post(
     controller.uploadAvatar
 );
 
+router.get("/forgot", controller.forgot);
+
+router.post("/forgot", controller.forgotPost);
+
+router.get("/forgot/sendOTP", controller.sendOTP);
+
+router.post("/forgot/sendOTP", controller.sendOTPPost);
+
 module.exports = router;

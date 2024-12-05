@@ -20,13 +20,13 @@ block main
 				h2
 					| Welcome
 				p
-					| Vui lòng nhập email
+					| Mã OTP có hiệu lực 3 phút ! Vui lòng nhập mã OTP để xác nhận tài khoản !
 				form(
-					action="/user/forgot" 
+					action="/user/forgot/sendOTP" 
 					method="post"
 				) 
-					input(class="form-control", name="email" placeholder="Email", type="email" minlength="6" required)
+					input(class="form-control", name="otp" placeholder="OTP", type="text"  required)
 					button(type="submit" class="btn btn-success w-100")
-						| Gửi OTP
+						| Xác nhận
 				p(class="terms")
 					| Điều khoản và điều kiện & chính sách bảo mật
