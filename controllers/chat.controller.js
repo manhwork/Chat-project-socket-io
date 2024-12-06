@@ -64,6 +64,8 @@ module.exports.chatFriend = async (req, res) => {
                 content,
                 user_id,
                 fullName,
+                myUser,
+                otherUser,
                 room_id,
             });
         });
@@ -74,17 +76,6 @@ module.exports.chatFriend = async (req, res) => {
         room_id: room_id,
     });
 
-    // if (chats) {
-    //     for (const chat of chats) {
-    //         const infoUser = await User.findOne({
-    //             _id: chat.user_id,
-    //             status: "active",
-    //         });
-    //         if (infoUser) {
-    //             chat.fullName = infoUser.fullName;
-    //         }
-    //     }
-    // }
     res.render("../views/pages/chat/chatFriend.pug", {
         pageTitle: `chat`,
         chats: chats,
