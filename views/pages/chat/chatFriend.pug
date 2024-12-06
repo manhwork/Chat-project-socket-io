@@ -1,0 +1,37 @@
+extends ./index.pug
+
+block frameChat
+    div(class="content flex-grow-1" user-id=userInfo._id)
+        div(class="header")
+            img(alt="David Smith", height="40", src="https://storage.googleapis.com/a1aa/image/2HSuM7PWkMr4AR7OeKT7xe5TMXlniIaZ6bZg2ydMpYj7vKyTA.jpg", width="40")
+            div
+                div(class="name")
+                    | David Smith
+                //- div(class="members")
+                //-     | 22 members
+        div(class="date-divider")
+            span
+                | 
+        ul(class="messages")
+            each chat in chats 
+                if(chat.user_id == userInfo._id)
+                    li
+                        div(class="message sent")
+                            //- div(class="time")
+                            //-     | 12:03
+                            div(class="inner-msg") #{chat.content}
+                        img(alt="David Smith", height="40", class="img-sent", src="https://storage.googleapis.com/a1aa/image/2HSuM7PWkMr4AR7OeKT7xe5TMXlniIaZ6bZg2ydMpYj7vKyTA.jpg", width="40")
+                        //- div #{chat.fullName}
+                else 
+                    li
+                        img(alt="User", height="40", src="https://storage.googleapis.com/a1aa/image/14q8RMRXnNYBMh98MWeVsUWwWJjUzDqUPB2BQyo1BCSfvKyTA.jpg", class="img-received", width="40")
+                        //- div #{chat.fullName}
+                        div(class="message received")
+                            div(class="inner-msg") #{chat.content}
+                            //- div(class="time")
+                            //-     | 12:03
+        form(action="/chats", method="post" class="message-input") 
+            i(class="fas fa-paperclip me-2")
+            input(placeholder="Your message", type="text" name="content")
+            button(type="submit")
+                | Submit

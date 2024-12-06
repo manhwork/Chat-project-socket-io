@@ -1,6 +1,7 @@
 const User = require("../models/user.model");
 const getInfoFriendDetailHelper = require("../helpers/getInfoFriendDetail");
 const friendRequestHelper = require("../helpers/friendRequests");
+const roomChat = require("../models/room-chat.model");
 
 // [GET] /user/not-friend
 
@@ -94,11 +95,34 @@ module.exports.friendInvitation = async (req, res) => {
         socket.on("CLIENT_ACCEPT_FRIEND", async (data) => {
             const otherUserId = data.userId;
 
+            // Tạo friend roomchat 2 người
+            objectRoom = {
+                status: "active",
+                typeRoom: "friend",
+                users: [
+                    {
+                        user_id: myUser.id,
+                    },
+                    {
+                        user_id: otherUserId,
+                    },
+                ],
+            };
+
+            const room = new roomChat(objectRoom);
+            await room.save();
+
+            const room_id = room.id;
+
             await Promise.all([
                 // Xoá lời mời kết bạn
                 friendRequestHelper.rejectFriendRequest(myUser.id, otherUserId),
                 // thêm vào danh sách bạn bè
-                friendRequestHelper.acceptFriendRequest(myUser.id, otherUserId),
+                friendRequestHelper.acceptFriendRequest(
+                    myUser.id,
+                    otherUserId,
+                    room_id
+                ),
             ]);
 
             // Lấy ra số lượng người gửi kết bạn

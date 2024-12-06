@@ -16,6 +16,7 @@ module.exports = async function getInfoFriend(arr) {
                     userId: item.user_id,
                     fullName: fullName,
                     avatar: avatar,
+                    room_id: item.room_id,
                 });
             }
         }

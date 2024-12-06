@@ -79,7 +79,7 @@ module.exports.rejectFriendRequest = async (myUserId, otherUserId) => {
 };
 
 // Chấp nhận yêu cầu kết bạn
-module.exports.acceptFriendRequest = async (myUserId, otherUserId) => {
+module.exports.acceptFriendRequest = async (myUserId, otherUserId, room_id) => {
     // Kiểm tra xem hai người dùng đã là bạn bè hay chưa
     const [myUser, otherUser] = await Promise.all([
         // Kiểm tra danh sách bạn bè của user A xem có user B chưa
@@ -94,11 +94,25 @@ module.exports.acceptFriendRequest = async (myUserId, otherUserId) => {
         await Promise.all([
             User.updateOne(
                 { _id: myUserId, status: "active" },
-                { $push: { friendsList: { user_id: otherUserId } } }
+                {
+                    $push: {
+                        friendsList: {
+                            user_id: otherUserId,
+                            room_id: room_id,
+                        },
+                    },
+                }
             ),
             User.updateOne(
                 { _id: otherUserId, status: "active" },
-                { $push: { friendsList: { user_id: myUserId } } }
+                {
+                    $push: {
+                        friendsList: {
+                            user_id: myUserId,
+                            room_id: room_id,
+                        },
+                    },
+                }
             ),
         ]);
     }

@@ -216,3 +216,8 @@ ul {
 .inner-msg {
     overflow-wrap: anywhere;
 }
+
+a {
+    text-decoration: none;
+    color: #212529;
+}

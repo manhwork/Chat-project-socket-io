@@ -19,63 +19,32 @@ block main
                 i(class="fas fa-chevron-down ms-auto")
                 div(class="dropdown-menu d-none")
                     a(class="dropdown-item", href="/user/info") Hồ sơ
-                    a(class="dropdown-item", href="/settings") Cài đặt
                     a(class="dropdown-item", href="/user/logout") Đăng xuất
                 
             div(class="search-box")
                 input(class="form-control", placeholder="Search here", type="text")
             ul(class="user-list")
-                li(class="active")
-                    img(alt="David Smith", height="40", src="https://storage.googleapis.com/a1aa/image/2HSuM7PWkMr4AR7OeKT7xe5TMXlniIaZ6bZg2ydMpYj7vKyTA.jpg", width="40")
-                    div(class="user-info")
-                        div(class="name")
-                            | David Smith
-                        div(class="status")
-                            | Sonar: Hi I&apos;m here
-                    div(class="time")
-                        | 12:08
-                    span(class="badge")
-                        | 6
-                li
-                    img(alt="Angee Sam", height="40", src="https://storage.googleapis.com/a1aa/image/F38vptKsxOp1FdAAN2s4eRfP24FjmccwqzwRI7AesbGPgVknA.jpg", width="40")
-                    div(class="user-info")
-                        div(class="name")
-                            | Angee Sam
-                        div(class="status")
-                            | Sonar: Hi I&apos;m here
-                    div(class="time")
-                        | 12:08
-        div(class="content flex-grow-1" user-id=userInfo._id)
-            div(class="header")
-                img(alt="David Smith", height="40", src="https://storage.googleapis.com/a1aa/image/2HSuM7PWkMr4AR7OeKT7xe5TMXlniIaZ6bZg2ydMpYj7vKyTA.jpg", width="40")
-                div
-                    div(class="name")
-                        | David Smith
-                    div(class="members")
-                        | 22 members
-            div(class="date-divider")
-                span
-                    | 09 DEC 2020
-            ul(class="messages")
-                each chat in chats 
-                    if(chat.user_id == userInfo._id)
-                        li
-                            div(class="message sent")
-                                //- div(class="time")
-                                //-     | 12:03
-                                div(class="inner-msg") #{chat.content}
-                            img(alt="David Smith", height="40", class="img-sent", src="https://storage.googleapis.com/a1aa/image/2HSuM7PWkMr4AR7OeKT7xe5TMXlniIaZ6bZg2ydMpYj7vKyTA.jpg", width="40")
-                            //- div #{chat.fullName}
-                    else 
-                        li
-                            img(alt="User", height="40", src="https://storage.googleapis.com/a1aa/image/14q8RMRXnNYBMh98MWeVsUWwWJjUzDqUPB2BQyo1BCSfvKyTA.jpg", class="img-received", width="40")
-                            //- div #{chat.fullName}
-                            div(class="message received")
-                                div(class="inner-msg") #{chat.content}
-                                //- div(class="time")
-                                //-     | 12:03
-            form(action="/chats", method="post" class="message-input") 
-                i(class="fas fa-paperclip me-2")
-                input(placeholder="Your message", type="text" name="content")
-                button(type="submit")
-                    | Submit
+                if(friendsInfo)
+                    each friend in friendsInfo
+                        a(href=`/chats/${friend.room_id}`) 
+                            li(class="")
+                                img(alt="David Smith", height="40", src=friend.avatar, width="40")
+                                div(class="user-info")
+                                    div(class="name")
+                                        | #{friend.fullName}
+                            //- div(class="status")
+                            //-     | Sonar: Hi I&apos;m here
+                        //- div(class="time")
+                        //-     | 12:08
+                        //- span(class="badge")
+                        //-     | 6
+                //- li
+                //-     img(alt="Angee Sam", height="40", src="https://storage.googleapis.com/a1aa/image/F38vptKsxOp1FdAAN2s4eRfP24FjmccwqzwRI7AesbGPgVknA.jpg", width="40")
+                //-     div(class="user-info")
+                //-         div(class="name")
+                //-             | Angee Sam
+                //-         div(class="status")
+                //-             | Sonar: Hi I&apos;m here
+                //-     div(class="time")
+                //-         | 12:08
+        block frameChat
