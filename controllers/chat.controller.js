@@ -25,6 +25,27 @@ module.exports.chatFriend = async (req, res) => {
 
     const room_id = req.params.room_id;
 
+    const roomInfo = await RoomChat.findOne({
+        deleted: false,
+        typeRoom: "friend",
+        _id: room_id,
+    });
+
+    let otherUserId;
+
+    const userIdInRoom = roomInfo.users;
+
+    userIdInRoom.forEach((item) => {
+        if (item.user_id !== myUser.id) {
+            otherUserId = item.user_id;
+        }
+    });
+
+    const otherUser = await User.findOne({
+        _id: otherUserId,
+        status: "active",
+    }).select("fullName avatar id");
+
     _io.once("connection", (socket) => {
         console.log("User " + socket.id + " connected");
 
@@ -53,19 +74,22 @@ module.exports.chatFriend = async (req, res) => {
         room_id: room_id,
     });
 
-    if (chats) {
-        for (const chat of chats) {
-            const infoUser = await User.findOne({
-                _id: chat.user_id,
-                status: "active",
-            });
-            if (infoUser) {
-                chat.fullName = infoUser.fullName;
-            }
-        }
-    }
+    // if (chats) {
+    //     for (const chat of chats) {
+    //         const infoUser = await User.findOne({
+    //             _id: chat.user_id,
+    //             status: "active",
+    //         });
+    //         if (infoUser) {
+    //             chat.fullName = infoUser.fullName;
+    //         }
+    //     }
+    // }
     res.render("../views/pages/chat/chatFriend.pug", {
         pageTitle: `chat`,
         chats: chats,
+        roomInfo: roomInfo,
+        otherUser: otherUser,
+        myUser: myUser,
     });
 };

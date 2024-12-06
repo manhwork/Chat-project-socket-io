@@ -1,12 +1,12 @@
 extends ./index.pug
 
 block frameChat
-    div(class="content flex-grow-1" user-id=userInfo._id)
+    div(class="content flex-grow-1" user-id=userInfo._id room-id=roomInfo.id)
         div(class="header")
-            img(alt="David Smith", height="40", src="https://storage.googleapis.com/a1aa/image/2HSuM7PWkMr4AR7OeKT7xe5TMXlniIaZ6bZg2ydMpYj7vKyTA.jpg", width="40")
+            img(alt="David Smith", height="40", src=otherUser.avatar, width="40")
             div
                 div(class="name")
-                    | David Smith
+                    | #{otherUser.fullName}
                 //- div(class="members")
                 //-     | 22 members
         div(class="date-divider")
@@ -20,11 +20,11 @@ block frameChat
                             //- div(class="time")
                             //-     | 12:03
                             div(class="inner-msg") #{chat.content}
-                        img(alt="David Smith", height="40", class="img-sent", src="https://storage.googleapis.com/a1aa/image/2HSuM7PWkMr4AR7OeKT7xe5TMXlniIaZ6bZg2ydMpYj7vKyTA.jpg", width="40")
+                        img(alt="David Smith", height="40", class="img-sent", src=myUser.avatar, width="40")
                         //- div #{chat.fullName}
                 else 
                     li
-                        img(alt="User", height="40", src="https://storage.googleapis.com/a1aa/image/14q8RMRXnNYBMh98MWeVsUWwWJjUzDqUPB2BQyo1BCSfvKyTA.jpg", class="img-received", width="40")
+                        img(alt="User", height="40", src=otherUser.avatar, class="img-received", width="40")
                         //- div #{chat.fullName}
                         div(class="message received")
                             div(class="inner-msg") #{chat.content}
@@ -34,4 +34,4 @@ block frameChat
             i(class="fas fa-paperclip me-2")
             input(placeholder="Your message", type="text" name="content")
             button(type="submit")
-                | Submit
+                | Gửi

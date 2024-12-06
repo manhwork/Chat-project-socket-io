@@ -28,27 +28,31 @@ if (messageList) {
         const li = document.createElement("li");
         const userIdElement = document.querySelector("[user-id]");
         const userId = userIdElement.getAttribute("user-id");
+        const roomChatElement = document.querySelector(`[room-id]`);
+        const room_id = roomChatElement.getAttribute("room-id");
 
-        if (userId === data.user_id) {
-            li.innerHTML = `
-                <div class="message sent">
+        if (room_id === data.room_id) {
+            if (userId === data.user_id) {
+                li.innerHTML = `
+                    <div class="message sent">
+                        ${data.content}
+                        <div class="time">12:03</div>
+                    </div>
+                    <img class="img-sent" alt="David Smith" height="40"
+                    src="https://storage.googleapis.com/a1aa/image/2HSuM7PWkMr4AR7OeKT7xe5TMXlniIaZ6bZg2ydMpYj7vKyTA.jpg" width="40">            
+                `;
+            } else {
+                li.innerHTML = `
+                <img class="img-received" alt="User" height="40"
+                    src="https://storage.googleapis.com/a1aa/image/14q8RMRXnNYBMh98MWeVsUWwWJjUzDqUPB2BQyo1BCSfvKyTA.jpg" width="40">
+                <div class="message received">
                     ${data.content}
-                    <div class="time">12:03</div>
+                    <div class="time">12:03
+    
+                    </div>
                 </div>
-                <img class="img-sent" alt="David Smith" height="40"
-                src="https://storage.googleapis.com/a1aa/image/2HSuM7PWkMr4AR7OeKT7xe5TMXlniIaZ6bZg2ydMpYj7vKyTA.jpg" width="40">            
-            `;
-        } else {
-            li.innerHTML = `
-            <img class="img-received" alt="User" height="40"
-                src="https://storage.googleapis.com/a1aa/image/14q8RMRXnNYBMh98MWeVsUWwWJjUzDqUPB2BQyo1BCSfvKyTA.jpg" width="40">
-            <div class="message received">
-                ${data.content}
-                <div class="time">12:03
-
-                </div>
-            </div>
-            `;
+                `;
+            }
         }
 
         messageList.appendChild(li);
@@ -197,3 +201,10 @@ if (buttonCancelFriendInList) {
     });
 }
 // Hủy kết bạn
+
+// Chat theo friend room
+const roomChatElement = document.querySelector(`[room-id]`);
+if (roomChatElement) {
+    const room_id = roomChatElement.getAttribute("room-id");
+}
+// End Chat theo friend room
