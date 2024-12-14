@@ -20,7 +20,7 @@ block frameChat
                             //- div(class="time")
                             //-     | 12:03
                             div(class="inner-msg") #{chat.content}
-                        img(alt="David Smith", height="40", class="img-sent", src=myUser.avatar, width="40")
+                        //- img(alt="David Smith", height="40", class="img-sent", src=myUser.avatar, width="40")
                         //- div #{chat.fullName}
                 else 
                     li
@@ -30,6 +30,12 @@ block frameChat
                             div(class="inner-msg") #{chat.content}
                             //- div(class="time")
                             //-     | 12:03
+            li(class="typing-indicator")
+                span.typing-text #{otherUser.fullName}
+                div(class="inner-msg")
+                    span(class="dot") 
+                    span(class="dot") 
+                    span(class="dot") 
         form(action="/chats", method="post" class="message-input") 
             i(class="fas fa-paperclip me-2")
             input(placeholder="Your message", type="text" name="content")

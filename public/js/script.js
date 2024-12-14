@@ -39,8 +39,6 @@ if (messageList) {
                     <div class="message sent">
                         ${data.content}
                     </div>
-                    <img class="img-sent" alt="David Smith" height="40"
-                    src=${myUser.avatar} width="40">            
                 `;
             } else {
                 li.innerHTML = `
