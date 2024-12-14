@@ -274,3 +274,17 @@ a {
 .d-block {
     display: block !important;
 }
+
+/* Emoji  */
+.inner-emoji {
+    margin-right: 10px;
+    position: relative;
+}
+
+emoji-picker {
+    position: absolute;
+    bottom: 200%;
+}
+
+
+/* Emoji  */

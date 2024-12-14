@@ -38,6 +38,9 @@ block frameChat
                     span(class="dot") 
         form(action="/chats", method="post" class="message-input") 
             i(class="fas fa-paperclip me-2")
+            div(class="inner-emoji") 
+                |😀
+                emoji-picker(class="light d-none") 
             input(placeholder="Your message", type="text" name="content")
             button(type="submit")
                 | Gửi

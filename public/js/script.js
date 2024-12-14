@@ -236,6 +236,19 @@ if (buttonCancelFriendInList) {
 }
 // Hủy kết bạn
 
-// Typing
+// Emoji Element
+const emojiPicker = document.querySelector("emoji-picker");
 
-// End Typing
+if (emojiPicker) {
+    emojiPicker.addEventListener("emoji-click", (e) => {
+        const messageInput = messageForm.querySelector("input");
+        messageInput.value += e.detail.unicode;
+    });
+
+    const innerEmoji = messageForm.querySelector(".inner-emoji");
+    innerEmoji.addEventListener("click", (e) => {
+        emojiPicker.classList.toggle("d-block");
+    });
+}
+
+// End Emoji Element
