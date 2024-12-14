@@ -69,6 +69,15 @@ module.exports.chatFriend = async (req, res) => {
                 room_id,
             });
         });
+
+        socket.on("CLIENT_TYPING", (type) => {
+            socket.broadcast.emit("SERVER_SEND_TYPING", {
+                room_id,
+                myUser,
+                otherUser,
+                type,
+            });
+        });
     });
 
     const chats = await Chat.find({

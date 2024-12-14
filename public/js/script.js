@@ -8,6 +8,7 @@ if (messageElement) {
 // end Scroll bottom page
 
 // CLIENT_SEND_MESS
+
 const messageForm = document.querySelector(".message-input");
 if (messageForm) {
     const messageInput = messageForm.querySelector("input");
@@ -19,6 +20,7 @@ if (messageForm) {
         }
     });
 }
+
 // end CLIENT_SEND_MESS
 
 // SERVER_SEND_MESS
@@ -57,6 +59,41 @@ if (messageList) {
     });
 }
 // end SERVER_SEND_MESS
+
+// Typing
+if (messageForm) {
+    const messageInput = messageForm.querySelector("input");
+    let typingTimeOut;
+    messageInput.addEventListener("keyup", (e) => {
+        clearTimeout(typingTimeOut);
+        socket.emit("CLIENT_TYPING", "typing");
+
+        typingTimeOut = setTimeout(() => {
+            socket.emit("CLIENT_TYPING", "stop");
+        }, 3000);
+    });
+}
+
+if (messageList) {
+    socket.on("SERVER_SEND_TYPING", (data) => {
+        const li = document.createElement("li");
+        const userIdElement = document.querySelector("[user-id]");
+        const userId = userIdElement.getAttribute("user-id");
+        const roomChatElement = document.querySelector(`[room-id]`);
+        const room_id = roomChatElement.getAttribute("room-id");
+        const myUser = data.myUser;
+        const otherUser = data.otherUser;
+        const typingIndicator = document.querySelector(`.typing-indicator`);
+        if (room_id == data.room_id) {
+            if (data.type === "typing") {
+                typingIndicator.classList.add("d-block");
+            } else {
+                typingIndicator.classList.remove("d-block");
+            }
+        }
+    });
+}
+// End Typing
 
 // notification
 const notificationShow = document.querySelector(`[notification-show]`);
@@ -199,9 +236,6 @@ if (buttonCancelFriendInList) {
 }
 // Hủy kết bạn
 
-// Chat theo friend room
-const roomChatElement = document.querySelector(`[room-id]`);
-if (roomChatElement) {
-    const room_id = roomChatElement.getAttribute("room-id");
-}
-// End Chat theo friend room
+// Typing
+
+// End Typing
